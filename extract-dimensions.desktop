@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Extract Dimensions
+Comment=Extract dimensions from PDF technical drawings and generate OpenSCAD models
+Exec=python3 /home/user/Extract-dimensions/app.py
+Icon=/home/user/Extract-dimensions/icon.png
+Terminal=false
+Categories=Graphics;Engineering;Science;
+Keywords=openscad;pdf;cad;drawing;dimensions;
+StartupNotify=true
+StartupWMClass=app
