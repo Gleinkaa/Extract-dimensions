@@ -12,6 +12,7 @@ class Dimension:
     value: float        # numeric value
     unit: str           # "mm" or "inch"
     tolerance: str = "" # e.g. "±0.1" or ""
+    position: Optional[list[float]] = None  # [x, y] of the text anchor, for geometry linking
 
 
 @dataclass
