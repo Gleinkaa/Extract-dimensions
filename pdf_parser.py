@@ -78,9 +78,15 @@ def pdf_page_to_png_bytes(pdf_path: str, page_index: int = 0, dpi: int = 200) ->
 # --- Helpers ---
 
 def _is_rect_shape(items: list) -> bool:
-    """Return True if path items form a simple rectangle (4 lines, right angles)."""
+    """Return True if path items form a simple rectangle.
+
+    PyMuPDF emits two rectangle forms: a stroked rectangle is four "l" (line)
+    items, while a filled rectangle is a single "re" (rectangle) item. Handle
+    both so a part outline is not silently dropped.
+    """
     line_items = [i for i in items if i[0] == "l"]
-    return len(line_items) >= 4
+    rect_items = [i for i in items if i[0] == "re"]
+    return len(line_items) >= 4 or bool(rect_items)
 
 
 def _detect_circle(items: list) -> Optional[tuple[float, float, float]]:
@@ -88,12 +94,13 @@ def _detect_circle(items: list) -> Optional[tuple[float, float, float]]:
     curve_items = [i for i in items if i[0] == "c"]
     if len(curve_items) < 4:
         return None
-    # Collect all control point endpoints
+    # Collect the curve endpoints (not control points — see below).
     points = []
     for item in curve_items:
-        # Bezier: item = ("c", p1, p2, p3)
-        if len(item) >= 4:
-            points.append(item[3])  # endpoint
+        # Bezier: item = ("c", start, ctrl1, ctrl2, end). Index 3 is ctrl2
+        # (which sits ~14% outside the true radius); the endpoint is index 4.
+        if len(item) >= 5:
+            points.append(item[4])  # endpoint
     if not points:
         return None
     xs = [p.x for p in points]
@@ -120,8 +127,8 @@ def _collect_polyline_points(items: list) -> list[tuple[float, float]]:
             if coord not in seen:
                 seen.add(coord)
                 points.append(coord)
-        elif kind == "c" and len(item) >= 4:
-            pt = item[3]
+        elif kind == "c" and len(item) >= 5:
+            pt = item[4]  # endpoint (index 4), not the second control point
             coord = (pt.x, pt.y)
             if coord not in seen:
                 seen.add(coord)
