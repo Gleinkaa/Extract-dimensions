@@ -35,6 +35,8 @@ class DrawingData:
     dimensions: list[Dimension] = field(default_factory=list)
     shapes: list[Shape] = field(default_factory=list)
     extrude_height: Optional[float] = None  # None = 2D only
+    links: list[dict] = field(default_factory=list)     # dimension ↔ shape links
+    orphans: list[dict] = field(default_factory=list)   # unlinked dimensions
 
     def to_json(self, indent: int = 2) -> str:
         return json.dumps(asdict(self), indent=indent)
@@ -50,4 +52,6 @@ class DrawingData:
             dimensions=dimensions,
             shapes=shapes,
             extrude_height=d.get("extrude_height"),
+            links=d.get("links", []),
+            orphans=d.get("orphans", []),
         )

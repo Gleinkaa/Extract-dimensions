@@ -64,6 +64,37 @@ def extract_raw_text(pdf_path: str, page_index: int = 0) -> str:
     return text
 
 
+def extract_text_spans(pdf_path: str, page_index: int = 0) -> list[dict]:
+    """Extract per-line text spans with bbox anchors from a PDF page.
+
+    Returns a list of line dicts in reading order::
+
+        {"text": str, "spans": [{"text": str, "x": float, "y": float}, ...]}
+
+    where ``text`` is the line's spans joined with a single space and each
+    span's (x, y) is the centre of its bbox. This is the position-aware input
+    for ``dimension_parser.parse_dimensions_from_spans``.
+    """
+    doc = fitz.open(pdf_path)
+    page = doc[page_index]
+    lines: list[dict] = []
+    for block in page.get_text("dict").get("blocks", []):
+        if block.get("type") != 0:  # text blocks only (0 = text, 1 = image)
+            continue
+        for line in block.get("lines", []):
+            spans = []
+            for span in line.get("spans", []):
+                t = (span.get("text") or "").strip()
+                if not t:
+                    continue
+                x0, y0, x1, y1 = span["bbox"]
+                spans.append({"text": t, "x": (x0 + x1) / 2.0, "y": (y0 + y1) / 2.0})
+            if spans:
+                lines.append({"text": " ".join(s["text"] for s in spans), "spans": spans})
+    doc.close()
+    return lines
+
+
 def pdf_page_to_png_bytes(pdf_path: str, page_index: int = 0, dpi: int = 200) -> bytes:
     """Rasterize a PDF page to PNG bytes for AI vision fallback."""
     doc = fitz.open(pdf_path)

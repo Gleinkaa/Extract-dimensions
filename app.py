@@ -300,12 +300,14 @@ class App(tk.Tk):
             # ── Library path ──────────────────────────────────────────
             if not ai_only:
                 self._log("Stage 1: Extracting vector paths from PDF…")
-                from pdf_parser import extract_paths, extract_raw_text
-                from dimension_parser import parse_dimensions, infer_units
+                from pdf_parser import extract_paths, extract_text_spans
+                from dimension_parser import parse_dimensions_from_spans, infer_units
+                from geometry_linker import link_dimensions
+                from dataclasses import asdict
 
                 shapes     = extract_paths(pdf_path, page_index=page_index)
-                raw_text   = extract_raw_text(pdf_path, page_index=page_index)
-                dimensions = parse_dimensions(raw_text)
+                spans      = extract_text_spans(pdf_path, page_index=page_index)
+                dimensions = parse_dimensions_from_spans(spans)
                 units      = infer_units(dimensions)
 
                 self._log(f"  → {len(shapes)} shape(s), {len(dimensions)} dimension(s)")
@@ -315,6 +317,7 @@ class App(tk.Tk):
                     use_ai = True
                 else:
                     from data_model import DrawingData
+                    link_result = link_dimensions(dimensions, shapes)
                     drawing_data = DrawingData(
                         source=os.path.basename(pdf_path),
                         units=units,
@@ -322,6 +325,8 @@ class App(tk.Tk):
                         dimensions=dimensions,
                         shapes=shapes,
                         extrude_height=extrude_height,
+                        links=[asdict(l) for l in link_result.links],
+                        orphans=[asdict(o) for o in link_result.orphans],
                     )
 
             # ── AI path (ask for key only if needed) ──────────────────
