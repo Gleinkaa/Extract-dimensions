@@ -3,14 +3,14 @@
 from __future__ import annotations
 import math
 from typing import Optional
-import fitz  # PyMuPDF
+import pymupdf  # PyMuPDF
 
 from data_model import Shape
 
 
 def extract_paths(pdf_path: str, page_index: int = 0) -> list[Shape]:
     """Extract vector shapes from a PDF page using PyMuPDF drawing paths."""
-    doc = fitz.open(pdf_path)
+    doc = pymupdf.open(pdf_path)
     page = doc[page_index]
     drawings = page.get_drawings()
     shapes: list[Shape] = []
@@ -21,7 +21,7 @@ def extract_paths(pdf_path: str, page_index: int = 0) -> list[Shape]:
 
         # Detect filled rectangles / squares
         if rect and _is_rect_shape(items):
-            r = fitz.Rect(rect)
+            r = pymupdf.Rect(rect)
             if r.width > 0.5 and r.height > 0.5:
                 shapes.append(Shape(
                     type="rectangle",
@@ -57,7 +57,7 @@ def extract_paths(pdf_path: str, page_index: int = 0) -> list[Shape]:
 
 def extract_raw_text(pdf_path: str, page_index: int = 0) -> str:
     """Extract all text from a PDF page."""
-    doc = fitz.open(pdf_path)
+    doc = pymupdf.open(pdf_path)
     page = doc[page_index]
     text = page.get_text("text")
     doc.close()
@@ -75,7 +75,7 @@ def extract_text_spans(pdf_path: str, page_index: int = 0) -> list[dict]:
     span's (x, y) is the centre of its bbox. This is the position-aware input
     for ``dimension_parser.parse_dimensions_from_spans``.
     """
-    doc = fitz.open(pdf_path)
+    doc = pymupdf.open(pdf_path)
     page = doc[page_index]
     lines: list[dict] = []
     for block in page.get_text("dict").get("blocks", []):
@@ -97,9 +97,9 @@ def extract_text_spans(pdf_path: str, page_index: int = 0) -> list[dict]:
 
 def pdf_page_to_png_bytes(pdf_path: str, page_index: int = 0, dpi: int = 200) -> bytes:
     """Rasterize a PDF page to PNG bytes for AI vision fallback."""
-    doc = fitz.open(pdf_path)
+    doc = pymupdf.open(pdf_path)
     page = doc[page_index]
-    mat = fitz.Matrix(dpi / 72, dpi / 72)
+    mat = pymupdf.Matrix(dpi / 72, dpi / 72)
     pix = page.get_pixmap(matrix=mat)
     png_bytes = pix.tobytes("png")
     doc.close()
