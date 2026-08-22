@@ -1,0 +1,226 @@
+{
+  "name": "Exercise 173 - 3-Lobe Base Vertical Housing / Bearing Standard",
+  "origin": "Center of the main vertical bore axis, on the BOTTOM face of the 3-lobe base plate (Z=0). The three ribs/lugs are at 120 deg; lug #1 is placed along +Y and the angled side boss lies in the XZ plane toward +X.",
+  "axes": "Z = vertical part axis (up, main bore direction). X = toward the angled Oe32/Oe19 side boss and the 44-wide pad. Y = completes right-handed set. Plan (top) view is the XY plane; front view is the XZ plane.",
+  "units": "mm",
+  "features": [
+    {
+      "type": "base_plate_3lobe",
+      "name": "Three-lobe base plate (NOT a plain circular flange)",
+      "params": {
+        "shape": "three-lobe / clover plate: three convex lobes at 120 deg blended by concave scallops between them",
+        "lobe_outer_radius_R": 54,
+        "outer_envelope_reference_R": 55,
+        "R54_meaning": "radius of the actual lobe outer arc (solid outline the leader terminates on)",
+        "R55_meaning": "outer construction/envelope circle just outside the lobe arc (est - the two leaders land on nearly the same arc at this resolution)",
+        "lobe_arc_centers_at_radius": "50 (est) - lobe arcs are centered on the same bolt circle as the mounting bosses",
+        "lobe_angular_spacing_deg": 120,
+        "scallop_blend_radius_R": 5,
+        "thickness": "5 (est)",
+        "z_bottom": 0,
+        "z_top": "5 (est)",
+        "note": "Front view shows the base as a THIN flat plate, not a thick Oe108 disc. Two small stacked dims (~5 and ~6) sit at base level in the height chain; 5 is read as the plate thickness."
+      }
+    },
+    {
+      "type": "boss_cylinder_pattern",
+      "name": "3x Oe20 mounting bosses on lobe tips",
+      "params": {
+        "count": 3,
+        "outer_diameter": 20,
+        "bolt_circle_radius": 50,
+        "bolt_circle_diameter": 100,
+        "angular_spacing_deg": 120,
+        "start_angle_deg": 90,
+        "callout": "3x Oe20",
+        "z_bottom": 0,
+        "height": "5 (est) - flush with / slightly proud of the base plate top",
+        "edge_fillet_R": 1
+      }
+    },
+    {
+      "type": "hole_pattern",
+      "name": "3x Oe10 mounting holes THRU",
+      "params": {
+        "count": 3,
+        "diameter": 10,
+        "through": true,
+        "bolt_circle_radius": 50,
+        "bolt_circle_diameter": 100,
+        "angular_spacing_deg": 120,
+        "start_angle_deg": 90,
+        "callout": "3x Oe10 THRU",
+        "concentric_with": "3x Oe20 bosses"
+      }
+    },
+    {
+      "type": "rib_pattern",
+      "name": "3x radial ribs from central body to each mounting boss",
+      "params": {
+        "count": 3,
+        "width": 5,
+        "angular_spacing_deg": 120,
+        "fillet_to_hub_R": 2,
+        "fillet_to_boss_R": 1,
+        "from_radius": "16 (est) - outer wall of central body",
+        "to_radius": 50,
+        "height_above_plate": "5 (est)",
+        "note": "Plan view shows each rib as a narrow 5 mm wide band with R2 fillets blending into the central hub; isometric confirms raised ribs on top of the lobed plate."
+      }
+    },
+    {
+      "type": "cylinder_stack",
+      "name": "Central body - lower stage",
+      "params": {
+        "outer_diameter": "44 (est) - the 44 dim spans the body/pad width in plan view",
+        "z_bottom": 0,
+        "z_top": 40,
+        "height": 40,
+        "note": "40 is the second dimension in the left-side height chain, measured from the base bottom face."
+      }
+    },
+    {
+      "type": "cylinder_stack",
+      "name": "Central body - collar / mid ring stage",
+      "params": {
+        "outer_diameter": "38 (est) - intermediate collar visible as a distinct ring in the isometric and as a concentric circle in plan",
+        "z_bottom": 40,
+        "z_top": 51,
+        "height": 11,
+        "note": "51 is the third dimension in the left-side height chain; the step from the body to the upper tube occurs here."
+      }
+    },
+    {
+      "type": "cylinder_stack",
+      "name": "Upper tower / neck - Oe32 tube",
+      "params": {
+        "outer_diameter": 32,
+        "z_bottom": 51,
+        "z_top": 75,
+        "height": 24,
+        "callout_height": "25 (dimension shown at top of the left chain, from ~Z50 to Z75)",
+        "note": "Oe32 is the OD of the upper tube, NOT Oe25. The 25 dim is the length of this top stage."
+      }
+    },
+    {
+      "type": "through_bore",
+      "name": "Main vertical bore Oe19 THRU",
+      "params": {
+        "diameter": 19,
+        "through": true,
+        "axis": "Z",
+        "z_from": 0,
+        "z_to": 75,
+        "callout": "Oe19"
+      }
+    },
+    {
+      "type": "chamfer",
+      "name": "Top edge chamfer on Oe32 tower",
+      "params": {
+        "callout": "2 X 45",
+        "size": 2,
+        "angle_deg": 45,
+        "location": "top outer edge of the Oe32 upper tower at Z=75",
+        "interpretation": "SolidWorks style 2 mm x 45 deg chamfer. Leader points to the top-right corner of the neck in the front view; being a revolved edge it appears on both sides of the section (this is what the review read as '2x 45 deg chamfers').",
+        "count_of_distinct_edges": 1
+      }
+    },
+    {
+      "type": "chamfer",
+      "name": "Bore mouth chamfer (est)",
+      "params": {
+        "size": "2 (est)",
+        "angle_deg": 45,
+        "location": "top inner edge of the Oe19 bore at Z=75 (est)",
+        "confidence": "low - concentric ring at the top of the tower in plan view suggests a chamfered bore mouth, but no separate callout is legible"
+      }
+    },
+    {
+      "type": "angled_boss",
+      "name": "Inclined Oe32 side boss with Oe19 bore",
+      "params": {
+        "outer_diameter": 32,
+        "bore_diameter": 19,
+        "inclination_deg": "45 (est) - boss axis tilts up and outward in the XZ plane",
+        "direction": "+X, tilted upward",
+        "axis_intersects_main_axis_at_Z": "28 (est)",
+        "end_face": "flat square/rectangular pad normal to the boss axis",
+        "callouts": ["Oe19", "Oe32"],
+        "note": "This is the dominant side feature. It is an ANGLED boss, not an axial one: the front view shows it drawn as a circle with a tilted square pad on its outboard end."
+      }
+    },
+    {
+      "type": "boss_with_bore",
+      "name": "Small Oe8 boss with Oe6 bore",
+      "params": {
+        "outer_diameter": 8,
+        "bore_diameter": 6,
+        "callouts": ["Oe8", "Oe6"],
+        "location": "on the central body, above and to the left of the large angled boss in the front view",
+        "z_center": "51 (est)",
+        "axis": "horizontal, radial from the main axis (est)",
+        "note": "Rendered in the isometric as a small tubular boss projecting from the body just under the collar. The previous session's 'Oe8 cross-bore' corresponds to this feature."
+      }
+    },
+    {
+      "type": "pad",
+      "name": "Rectangular pad / web carrying the side bosses",
+      "params": {
+        "width_across": 44,
+        "callout": "44",
+        "direction": "+X from the central body",
+        "note": "Plan view shows a rectangle tangent to the hub extending toward the side boss; 44 dimensions this pad."
+      }
+    },
+    {
+      "type": "dimension_reference",
+      "name": "Horizontal offset 25",
+      "params": {
+        "value": 25,
+        "callout": "25",
+        "location": "bottom of the front view, horizontal",
+        "meaning": "horizontal distance from the main vertical axis to the angled boss axis / outer face (est)"
+      }
+    },
+    {
+      "type": "dimension_reference",
+      "name": "Height 28mm",
+      "params": {
+        "value": 28,
+        "callout": "28mm",
+        "location": "right side of the front view, vertical",
+        "meaning": "height from the base bottom face to the center of the angled Oe32 boss (est)"
+      }
+    },
+    {
+      "type": "gusset",
+      "name": "Left-side gusset / support rib in front view",
+      "params": {
+        "shape": "tapered triangular web from the central body down to the base plate top",
+        "count": "3 (est) - coincides with the 3 radial ribs",
+        "note": "Front view shows a slanted double line from the body down to the plate on the left."
+      }
+    },
+    {
+      "type": "section",
+      "name": "Section C-C",
+      "params": {
+        "label": "C - C",
+        "cut_line": "passes through one Oe10 mounting hole (upper-left lug) and the main axis, extending to the right along the horizontal centerline",
+        "purpose": "the front view shown is (or relates to) this section"
+      }
+    },
+    {
+      "type": "fillet_set",
+      "name": "Fillets and small radii",
+      "params": {
+        "R1": "edge fillet at the Oe20 mounting bosses (3x R1)",
+        "R2": "rib-to-hub / rib blend fillet (3x R2)",
+        "R5": "concave scallop blend between adjacent lobes of the base plate",
+        "R3_possible": "a leader near the upper-left boss may read R3 instead of R1 (low resolution - ambiguous)"
+      }
+    }
+  ],
+  "notes": "TRANSCRIBED CALLOUTS (complete): Front/section view - 2 X 45 (chamfer), 75, 51, 40, 25 (vertical height chain from base bottom), 25 (horizontal, bottom), 28mm (vertical, right), Oe6, Oe8, Oe19, Oe32. Top/plan view - 3x Oe20, 3x Oe10 THRU, 120 deg, 120 deg, R54, R55, R5, R1, R2, 5, 44, section C-C. Title: Exercise 173.\n\nKEY CORRECTIONS TO THE PREVIOUS SKELETON (all four review flags confirmed, plus more):\n(a) BASE IS NOT A PLAIN Oe108 FLANGE. It is a thin THREE-LOBE plate: three convex lobes at 120 deg out to R54 (R55 = outer envelope/reference), joined by concave R5 scallops. Nothing on the drawing says Oe108; R54/R55 are radii, so the envelope diameter is 108/110 but the profile is lobed, not a disc. The plate is thin (~5 mm), not a thick flange.\n(b) MOUNTING HOLES CONFIRMED: 3x Oe10 THRU, on a R50 bolt circle at 120 deg, each inside a 3x Oe20 boss. The previous 'Oe16 lugs' should be Oe20 bosses with Oe10 holes.\n(c) CENTRAL TOWER CONFIRMED AS Oe32 / Oe19, NOT Oe25. Stack from the base bottom: body to Z40 (Oe44 est), collar Z40-Z51 (Oe38 est), upper tube Oe32 from Z51 to Z75 (the '25' dim). Bore is Oe19 through the whole part.\n(d) CHAMFER: one '2 X 45' callout pointing at the top outer edge of the Oe32 tower. Because the tower is a revolve, the single chamfer shows on both sides of the section, which is why the review inferred '2x 45 deg chamfers'.\n(e) NEW - the side boss is INCLINED (~45 deg, est), Oe32 OD with a Oe19 bore, ending in a flat square pad; it is not a plain axial Oe32 boss with a Oe8 cross-bore. The Oe8/Oe6 feature is a SEPARATE small boss higher up on the body.\n(f) NEW - 3 radial RIBS (5 mm wide, R2/R1 fillets) run from the central body out to each mounting boss across the lobed plate.\n\nOVERALL HEIGHT: 75 mm (base bottom face Z0 to top of Oe32 tower Z75).\n\nCONFIDENCE: The source is a 474x266 px JPEG screenshot of a SolidWorks session, heavily compressed. All numbers listed under TRANSCRIBED CALLOUTS were read directly and are high confidence. Values marked '(est)' were inferred from geometry proportions, the isometric render, and the feature tree (Boss-Extrude1-7, Fillet1, Cut-Extrude1-5, Plane1, DeleteFace1), because no legible callout exists: base plate thickness (5), lower body OD (44), collar OD (38), collar/lobe-arc centers (50), boss inclination (45 deg), the 25 and 28mm attachment points, and the small boss orientation. The R54 vs R55 assignment is the single most ambiguous read - both leaders terminate on visually coincident arcs; R54 is taken as the solid lobe outline and R55 as the outer envelope."
+}

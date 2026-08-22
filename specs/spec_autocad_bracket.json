@@ -1,0 +1,246 @@
+{
+  "name": "Three-Lobe Bracket (AutoCAD 2017 exercise, OIP-652393864)",
+  "origin": "Origin (0,0) is the center of the large hub C1 (the Oe40 OD / Oe20 bore boss at the upper right of the part). All coordinates are in this frame.",
+  "axes": "+X to the right, +Y up (standard CAD/math orientation). Angles are degrees, measured CCW from +X. The drawing's horizontal dash-dot centerline through C1 is the X axis; the vertical dash-dot centerline through C1 is the Y axis. Part lies in the XY plane and is extruded along +Z.",
+  "units": "mm",
+  "features": [
+    {
+      "type": "note_transcription",
+      "name": "raw_callouts_as_seen",
+      "params": {
+        "callouts_verbatim": ["R85", "R30", "R30", "60", "42\u00b0", "30", "R70", "\u00d840", "\u00d820", "10", "R8", "R8", "R15", "R32", "R25", "\u00d816", "135\u00b0", "\u00d850"],
+        "count": 18,
+        "distinct_values": {
+          "radii": ["R85", "R70", "R32", "R30 (x2)", "R25", "R15", "R8 (x2)"],
+          "diameters": ["\u00d850", "\u00d840", "\u00d820", "\u00d816"],
+          "linear": ["60", "30", "10"],
+          "angular": ["42\u00b0", "135\u00b0"]
+        },
+        "screen_text_ignored": ["Autodesk AutoCAD 2017", "Drafting & Annotation", "Drawing2*", "[-][Top][2D Wireframe]", "4.png* - Paint 3D", "Model / Layout1 / Layout2", "ENG IN 11:00 PM 1/20/2018"],
+        "no_thickness_callout": "There is NO thickness dimension anywhere on this drawing. It is a single top (plan) view only - no section, no side view, no title-block thickness note.",
+        "source_image": "/home/nik/dev/Fusion360_MCP_Training/data/drawings/OIP-652393864.jpg",
+        "image_resolution_px": "474x266 (screenshot of AutoCAD beside Paint 3D); drawing occupies roughly x=208..470, y=30..258 of the right pane",
+        "measurement_scale_mm_per_px": "0.762 (from \u00d840 hub) cross-checked 0.786 (from \u00d850 boss)"
+      }
+    },
+    {
+      "type": "hub",
+      "name": "C1_main_hub",
+      "params": {
+        "center": [0.0, 0.0],
+        "outer_diameter": 40.0,
+        "outer_radius": 20.0,
+        "bore_diameter": 20.0,
+        "bore_radius": 10.0,
+        "callouts": ["\u00d840", "\u00d820"],
+        "role": "Datum feature. This is a free-standing annular ring: the outer profile does NOT follow the \u00d840 circle. The \u00d840 circle is a real edge, and the outer boundary passes tangentially just outside/over it via the two R30 arcs.",
+        "verified": "Both circles measured concentric; OD spans 52.5 px => 40 mm at 0.762 mm/px."
+      }
+    },
+    {
+      "type": "hub",
+      "name": "C2_lower_boss",
+      "params": {
+        "center": [-10.0, -62.0],
+        "center_x_source": "EXACT - the '10' linear dimension is a horizontal offset between the vertical centerline of C1 and the vertical centerline of C2. Measured -10.29 mm (scale 0.762) / -9.51 mm (scale 0.786). C2 is 10 mm to the LEFT of C1.",
+        "center_y_source": "NOT directly dimensioned. Derived: measured -62.1 mm (scale 0.762) and -64.1 mm (scale 0.786); independently confirmed by the R32 tangency solution, which reproduces the measured R32 tangent point to 32.4 vs 32.0 nominal. Adopted -62.0.",
+        "center_y_confidence": "(est) - implied by tangency, not by an explicit callout",
+        "outer_diameter": 50.0,
+        "outer_radius": 25.0,
+        "bore_diameter": 16.0,
+        "bore_radius": 8.0,
+        "callouts": ["\u00d850", "\u00d816", "10"],
+        "distance_from_C1": 62.8,
+        "bearing_from_C1_deg": -99.16,
+        "role": "Second lobe. Its \u00d850 outer circle IS part of the outer profile: the boundary runs along the \u00d850 arc between the R32 fillet (upper left) and the R25 fillet (right).",
+        "correction": "The supplied context value C2=(-10,-48.3) is WRONG in Y. 48.3 would put the boss far too close to C1 and breaks the R32/R25 tangency. Correct Y is approximately -62."
+      }
+    },
+    {
+      "type": "obround_lobe",
+      "name": "C3_slot_lobe_outer_boundary",
+      "params": {
+        "axis_angle_deg": -45.0,
+        "axis_angle_equivalent": "315 deg CCW from +X; equals 135 deg measured clockwise from +X; equals the 135\u00b0 callout measured from the -X horizontal centerline at C3 sweeping clockwise/down to the axis.",
+        "near_cap_center": [42.426, -42.426],
+        "far_cap_center": [63.64, -63.64],
+        "midpoint": [53.033, -53.033],
+        "cap_radius": 8.0,
+        "overall_width": 16.0,
+        "center_to_center_length": 30.0,
+        "overall_length": 46.0,
+        "near_cap_distance_from_C1": 60.0,
+        "far_cap_distance_from_C1": 90.0,
+        "callouts_governing": ["60", "30", "135\u00b0", "R8"],
+        "dimension_chain": "60 and 30 are CHAINED aligned (parallel) dimensions along the same -45\u00b0 diagonal: 60 runs C1 -> near cap center; 30 continues from the near cap center -> far cap center. Their extension lines are perpendicular to the -45\u00b0 axis.",
+        "angle_datum": "The 135\u00b0 angular dimension is centered at the FAR cap center (C3 far, where the dash-dot centerlines cross). Leg 1 = the horizontal centerline running in the -X direction. Leg 2 = the slot axis running down-right at -45\u00b0. 180\u00b0 - 45\u00b0 = 135\u00b0.",
+        "measured_verification": "Cap-to-cap measured 30.83 mm (nominal 30). Axis angle measured -46.1\u00b0 and -45.1\u00b0 in two independent crops (nominal -45\u00b0). Transverse width measured 13.97 mm => cap R \u2248 7.0 (nominal R8).",
+        "role": "IMPORTANT - this obround is the OUTER BOUNDARY of the third lobe, drawn in heavy/continuous linework. It is NOT an internal slot cut. It is an external stadium-shaped ear.",
+        "resolution_of_ambiguity_b": "Orientation = axis along -45\u00b0 (down and to the right from C1). Position = near cap center at 60 mm from C1 along that -45\u00b0 ray, i.e. (42.426, -42.426); far cap 30 mm further at (63.64, -63.64). NOT centered at a point 'C3' - the 30 is a center-to-center length, so the geometric midpoint is (53.033, -53.033).",
+        "correction": "Supplied context C3=(+46.2,-46.2) gives 65.34 mm from C1, contradicting the dimensioned 60. Use (42.426,-42.426) for the near cap. Also, the context described S2 as a slot 'centered at C3' - it is actually the outer lobe boundary, and the 30 is cap-center to cap-center."
+      }
+    },
+    {
+      "type": "curved_slot",
+      "name": "S1_arc_slot",
+      "params": {
+        "type_detail": "Arc-shaped (curved) through slot with radiused ends - the only genuine internal slot cut on the part.",
+        "centerline_radius": 70.0,
+        "centerline_center": [0.0, 0.0],
+        "centerline_center_note": "Concentric with C1 (the origin). Confirmed: both cap centers measured at radius 69.3 and 68.9 mm from C1.",
+        "start_angle_deg": 138.0,
+        "end_angle_deg": 180.0,
+        "included_angle_deg": 42.0,
+        "cap_center_at_start": [-52.02, 46.839],
+        "cap_center_at_end": [-70.0, 0.0],
+        "cap_radius": 8.0,
+        "slot_width": 16.0,
+        "outer_wall_radius": 78.0,
+        "inner_wall_radius": 62.0,
+        "callouts_governing": ["R70", "42\u00b0", "R8"],
+        "angle_datum": "The 42\u00b0 angular dimension is centered at C1. Its two legs are radial lines from C1 through the two slot cap centers. The lower leg lands on the horizontal X axis (180\u00b0); the upper leg is 42\u00b0 above it (138\u00b0).",
+        "measured_verification": "Upper cap measured at 137.1\u00b0 / r=69.3; lower cap measured at 178.9\u00b0 / r=68.9. Span 41.8\u00b0 vs nominal 42\u00b0. Slot width measured 16.05 mm vs nominal 16.",
+        "correction": "The supplied context range '117-159 deg' is WRONG. The correct centerline span is 138\u00b0 to 180\u00b0. The outer R78 / inner R62 / R8 caps in the context ARE correct."
+      }
+    },
+    {
+      "type": "outer_profile",
+      "name": "open_three_lobe_boundary",
+      "params": {
+        "topology": "A single closed loop made of three lobes joined by tangent arcs. It is an OPEN 3-lobe (tri-star / triskelion) shape - there is NO enclosing disc. Only the C2 \u00d850 boss and the C3 obround contribute real boundary arcs; the C1 hub is bridged OVER by the two R30 arcs and its \u00d840 circle is a free-standing interior edge.",
+        "traversal_order_ccw": [
+          "1. ARM OUTER ARC R85 - centered at C1, radius 85, sweeping the arm from about 180\u00b0 up to about 138\u00b0 (the same angular band as the S1 slot). This is the far outer edge of the upper-left arm.",
+          "2. R30 (upper) - rounds the arm tip / forms the concave valley where the arm's right flank falls away toward the hub.",
+          "3. R30 (lower-right) - convex crest arc that rides tangentially OVER the top of the \u00d840 hub and turns the boundary onto the straight diagonal flank.",
+          "4. STRAIGHT DIAGONAL FLANK - a straight line parallel to the -45\u00b0 axis, tangent to the R30 crest and running down-right, tangent to the far R8 cap of the obround. The 60 and 30 dimensions are drawn parallel to this flank.",
+          "5. OBROUND LOBE - R8 far cap, then back along the obround's lower-left side to the R8 near cap.",
+          "6. R25 - concave fillet from the obround near cap sweeping left/down into the \u00d850 boss.",
+          "7. \u00d850 BOSS ARC - the outer profile follows the C2 \u00d850 circle around its lower/left side.",
+          "8. R32 - large concave fillet sweeping from the \u00d850 boss up-left to the lower tip of the arm.",
+          "9. R15 - convex rounding of the arm's lower/outer tip, closing back onto the R85 arc."
+        ],
+        "connection_rule": "Every junction in the loop is TANGENT (G1 continuous). There are no sharp corners anywhere on the outer profile. Concave (valley) fillets: R30-upper, R25, R32. Convex (crest) arcs: R85, R30-lower-right, R15, and the two R8 obround caps.",
+        "resolution_of_ambiguity_a": "The current model's 'disc R50 + arm wedge + boss + lobe' is wrong. Replace with this open tri-lobe tangent chain. Critically: there is no R50 disc, and the \u00d840 hub must be an isolated ring that the boundary passes over, not a filled disc."
+      }
+    },
+    {
+      "type": "fillet",
+      "name": "R85_arm_outer_arc",
+      "params": {
+        "radius": 85.0,
+        "center": [0.0, 0.0],
+        "concentric_with": "C1 origin, and with the R70 slot centerline",
+        "convexity": "convex (outer boundary)",
+        "approx_angular_span_deg": [138.0, 180.0],
+        "tangent_to": ["R15 arm lower tip", "R30 upper arm tip"],
+        "callout": "R85",
+        "measured_verification": "Arm outer edge measured 82.7, 81.9 and 83.7 mm from C1 at three points - consistent with R85 given raster limits.",
+        "note": "Because R85 (outer) and R70 (slot centerline) share center C1, the arm is a constant-width curved band. Material outboard of the slot = 85-78 = 7 mm; inboard = 62 - (inner profile) ."
+      }
+    },
+    {
+      "type": "fillet",
+      "name": "R30_upper_arm_to_hub_valley",
+      "params": {
+        "radius": 30.0,
+        "convexity": "concave (valley / material removed)",
+        "location": "Upper area, between the arm's right flank and the crest that goes over the hub. This is the dip of the S-curve clearly visible above and left of the \u00d840 hub.",
+        "center_est": [-40.87, 36.8],
+        "center_confidence": "(est) - derived as lying on the 138\u00b0 ray at radius 85-30=55; the raster is too coarse to fix it exactly.",
+        "tangent_to": ["R85 arm outer arc", "R30 lower-right crest arc"],
+        "callout": "R30 (the left-hand of the two R30 labels; its leader arrow points into the concave dip)"
+      }
+    },
+    {
+      "type": "fillet",
+      "name": "R30_crest_over_hub",
+      "params": {
+        "radius": 30.0,
+        "convexity": "convex (crest / material)",
+        "location": "Rides tangentially over the top of the \u00d840 hub, just right of the hub's vertical centerline, then turns down into the straight -45\u00b0 diagonal flank.",
+        "center_est": [3.42, 9.40],
+        "center_derivation": "Internally tangent to the \u00d840 hub OD: |center - C1| = 30 - 20 = 10, oriented up-and-right (about 70\u00b0).",
+        "center_confidence": "(est) - the tangency to \u00d840 is clear in the drawing but the exact bearing is not dimensioned.",
+        "tangent_to": ["R30 upper valley arc", "\u00d840 hub OD (grazing)", "straight -45\u00b0 diagonal flank"],
+        "callout": "R30 (the right-hand of the two R30 labels; its leader arrow points at the crest just right of the hub top)",
+        "measured_verification": "Leader arrowhead measured landing at about (15.6, 27.4), i.e. up and to the right of the hub - consistent with a crest arc there."
+      }
+    },
+    {
+      "type": "fillet",
+      "name": "R25_boss_to_obround",
+      "params": {
+        "radius": 25.0,
+        "convexity": "concave (valley)",
+        "center": [38.24, -75.16],
+        "center_derivation": "Externally tangent to the C2 \u00d850 boss (|center-C2| = 25+25 = 50) and to the obround near cap (|center-C3near| = 25+8 = 33). Of the two solutions, this one lies outboard/below the part and produces the observed inward valley.",
+        "tangent_to": ["C2 \u00d850 boss OD", "obround near R8 cap"],
+        "callout": "R25",
+        "measured_verification": "Measured tangent point about (29.3,-59.5) sits 18.0 mm from this center vs 40.7 mm from the rejected alternative - this center is the correct branch.",
+        "confidence": "(est) on the exact center because it inherits C2's undimensioned Y; the R25 value itself is an explicit callout."
+      }
+    },
+    {
+      "type": "fillet",
+      "name": "R32_arm_to_boss",
+      "params": {
+        "radius": 32.0,
+        "convexity": "concave (valley)",
+        "center": [-64.91, -46.72],
+        "center_derivation": "Externally tangent to the R15 arm-tip arc (|center - (-70,0)| = 15+32 = 47) and to the C2 \u00d850 boss (|center - C2| = 25+32 = 57).",
+        "tangent_to": ["R15 arm lower tip rounding", "C2 \u00d850 boss OD"],
+        "callout": "R32",
+        "measured_verification": "STRONG - measured R32 tangent point (-39.7,-26.3) lies 32.4 mm from this center vs nominal 32.0 (0.4 mm error). The rejected alternative gave 25.5. This independently corroborates C2 y = -62.",
+        "note": "This is the long sweeping concave edge on the lower left of the part, running from under the arm down to the boss."
+      }
+    },
+    {
+      "type": "fillet",
+      "name": "R15_arm_lower_tip",
+      "params": {
+        "radius": 15.0,
+        "convexity": "convex (crest)",
+        "center": [-70.0, 0.0],
+        "center_note": "Coincident with the S1 slot's lower cap center - the tip rounding is concentric with the slot end, so the arm keeps constant width right to its end. |center| = 70 from C1, on the X axis.",
+        "tangent_to": ["R85 arm outer arc", "R32 valley fillet"],
+        "callout": "R15",
+        "note": "Rounds the extreme lower-left tip of the arm. Outer extent = 70 + 15 = 85, matching R85 exactly, which confirms concentricity."
+      }
+    },
+    {
+      "type": "line",
+      "name": "straight_diagonal_flank",
+      "params": {
+        "direction_deg": -45.0,
+        "description": "Straight tangent line on the upper-right side of the part, running from the R30 crest over the hub down to the obround's far R8 cap. Parallel to the C1->C3 -45\u00b0 axis and offset from it to the upper right.",
+        "offset_from_axis_est": 8.0,
+        "offset_confidence": "(est) - it is tangent to the R8 far cap, so its perpendicular offset from the -45\u00b0 centerline is 8 mm on the upper-right side.",
+        "tangent_to": ["R30 crest over hub", "obround far R8 cap"],
+        "dimension_reference": "The 60 and 30 aligned dimensions are drawn parallel to and outboard of this flank."
+      }
+    },
+    {
+      "type": "hole",
+      "name": "C1_bore",
+      "params": {"center": [0.0, 0.0], "diameter": 20.0, "through": true, "callout": "\u00d820"}
+    },
+    {
+      "type": "hole",
+      "name": "C2_bore",
+      "params": {"center": [-10.0, -62.0], "diameter": 16.0, "through": true, "callout": "\u00d816"}
+    },
+    {
+      "type": "extrude",
+      "name": "plate_thickness",
+      "params": {
+        "thickness": 10.0,
+        "confidence": "(est)",
+        "status": "NOT DIMENSIONED ON THIS DRAWING",
+        "evidence": "The drawing is a single top/plan view. There is no section view, no side view, no leader and no title-block note giving thickness. The only '10' on the sheet is a horizontal LINEAR dimension locating C2 10 mm left of C1 - it is emphatically NOT a thickness. I zoomed to that callout: it has two vertical extension lines and a horizontal dimension line with arrowheads between the C1 and C2 vertical centerlines.",
+        "recommendation": "Keep 10 mm as the working thickness (it is a sensible value for this size of bracket and matches the value already in the model), but flag it as an assumption, not a read dimension.",
+        "resolution_of_ambiguity_d": "Plate thickness is NOT dimensioned on the drawing. Use 10 mm (est). Do not cite the '10' callout as its source."
+      }
+    }
+  ],
+  "notes": "SCALE / METHOD: measurements taken from the 474x266 px screenshot, right-hand Paint 3D pane, upscaled up to 18x with Lanczos. Two independent scale calibrations agree: 0.762 mm/px from the \u00d840 hub and 0.786 mm/px from the \u00d850 boss (3% spread). All derived numbers below were cross-checked against explicit callouts where possible.\n\nRESOLVED AMBIGUITIES:\n(a) OUTER PROFILE - It is an open three-lobe (tri-star) closed loop, not a disc. Remove the R50 disc and the arm wedge entirely. Going CCW: R85 arm outer arc (centered at the origin) -> R30 concave valley -> R30 convex crest that rides tangentially over the top of the \u00d840 hub -> straight -45\u00b0 flank -> obround far R8 cap -> obround side -> obround near R8 cap -> R25 concave fillet -> \u00d850 boss arc -> R32 concave fillet -> R15 convex arm tip -> back to R85. Every junction is tangent. The \u00d840 hub is an isolated ring the boundary passes OVER; it is not a filled disc and its circle is not part of the boundary.\n(b) OBROUND (called S2 in the brief) - Axis at -45\u00b0. It is the OUTER boundary of the third lobe, not an internal cut. Near cap center (42.426,-42.426) at 60 mm from C1; far cap center (63.64,-63.64) at 90 mm. Cap R8, width 16, cap-to-cap 30, overall length 46. The 135\u00b0 callout is centered on the far cap and measures from the -X horizontal centerline clockwise to the slot axis (180-45=135).\n(c) FILLETS - R85 = arm outer arc, centered at the origin. R30 x2 = the S-curve between the arm and the hub (one concave valley, one convex crest grazing the \u00d840 hub). R32 = long concave sweep from the arm's lower tip to the \u00d850 boss. R25 = concave fillet from the \u00d850 boss to the obround near cap. R15 = convex rounding of the arm's lower-left tip, concentric with the slot's lower cap. R8 x2 = one labels the S1 slot end caps, one labels the obround caps (both are 8).\n(d) THICKNESS - Not dimensioned. 10 mm retained as an estimate only.\n\nCORRECTIONS TO THE SUPPLIED CONTEXT (three errors found):\n1. S1 slot angular span is 138\u00b0 to 180\u00b0, NOT 117\u00b0-159\u00b0. Measured 137.1\u00b0 and 178.9\u00b0. The 42\u00b0 width, R70 centerline, R78/R62 walls and R8 caps are all correct.\n2. C3 is at (42.426,-42.426) = 60 mm at -45\u00b0, NOT (+46.2,-46.2) which would be 65.34 mm and contradicts the dimensioned 60.\n3. C2 is at approximately (-10,-62), NOT (-10,-48.3). The X of -10 is exactly right and is the '10' callout. The Y was measured at -62.1 and -64.1 by two scales and is independently confirmed by the R32 tangency, which reproduces the measured tangent point to within 0.4 mm.\n\nUNREADABLE / NOT PRESENT: no thickness dimension, no title block, no tolerances, no material note, no surface finish, no scale ratio, no part number. The image is a low-resolution desktop screenshot, so all leader arrowhead positions carry roughly +/-1.5 mm of uncertainty; every value asserted as exact above is backed by a legible text callout, and every value I derived is labelled (est).\n\nBUILD ORDER SUGGESTION: 1) sketch the three lobe centers and the two construction rays (-45\u00b0 to the obround, and the 138\u00b0/180\u00b0 pair for the slot); 2) place the \u00d850 boss circle and the obround; 3) draw the R85 arc about the origin; 4) fillet in R15, R32, R25, and the two R30s, letting the solver enforce tangency; 5) trim to the closed loop; 6) extrude 10 mm; 7) cut the \u00d820 and \u00d816 bores and the R70/42\u00b0 curved slot."
+}

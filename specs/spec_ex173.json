@@ -1,0 +1,254 @@
+{
+  "name": "Exercise 173 - Two-Lobe Crank Link Plate (S-shaped rocker link)",
+  "origin": "Origin at the center of the central hub / Ø40 through-bore, on the part's mid-thickness plane (the 10 mm web is symmetric about Z=0). The part is a flat plate: the front view is the XY plane, thickness runs along Z.",
+  "axes": "+X to the right in the front view, +Y upward in the front view, +Z out of the page toward the viewer (right-handed). Front view = XY plane. Side view (right-hand view) is the projection onto the YZ plane, with Z horizontal.",
+  "units": "mm",
+  "features": [
+    {
+      "type": "note_drawing_mismatch",
+      "name": "CRITICAL - supplied SKELETON does not match this drawing",
+      "params": {
+        "severity": "blocking",
+        "finding": "The drawing at example5-2094245636.png is NOT a housing/valve part. It is a flat, symmetric TWO-LOBE (S-shaped) crank/rocker link plate with a central hub, two opposed offset ears, and a constant-thickness web. NONE of the skeleton features (Ø108 flange, 3x Ø16 lugs at 120deg, Ø44 body, Ø25 neck, Ø19 bore, Ø32 side boss, Ø8 cross bore) appear anywhere on this drawing.",
+        "dimensions_actually_on_drawing": ["12", "ø10", "R 10", "R 100", "R 35", "ø40", "ø80", "20", "10"],
+        "total_callouts_on_drawing": 9,
+        "recommendation": "Discard the skeleton entirely and rebuild from this spec. The skeleton appears to belong to a different exercise/part."
+      }
+    },
+    {
+      "type": "cylinder_hub",
+      "name": "Central hub (Ø80 outer, 20 mm thick)",
+      "params": {
+        "center": [0.0, 0.0, 0.0],
+        "axis": "Z",
+        "outer_diameter": 80.0,
+        "outer_radius": 40.0,
+        "thickness": 20.0,
+        "z_min": -10.0,
+        "z_max": 10.0,
+        "callout": "ø80 (outer), 20 (thickness, from side view)",
+        "confidence": "high - Ø80 read directly; 20 mm read directly; verified by pixel trace (measured 79.9 mm dia, 19.94 mm thick)"
+      }
+    },
+    {
+      "type": "through_hole",
+      "name": "Central bore Ø40 (through)",
+      "params": {
+        "center": [0.0, 0.0, 0.0],
+        "axis": "Z",
+        "diameter": 40.0,
+        "radius": 20.0,
+        "through": true,
+        "depth": 20.0,
+        "z_min": -10.0,
+        "z_max": 10.0,
+        "callout": "ø40",
+        "confidence": "high - read directly; pixel-verified at 40.0 mm"
+      }
+    },
+    {
+      "type": "boss_lobe",
+      "name": "Upper lobe boss (Ø20 / R10, 20 mm thick)",
+      "params": {
+        "center": [12.0, 76.1315, 0.0],
+        "center_rounded": [12.0, 76.13, 0.0],
+        "axis": "Z",
+        "outer_diameter": 20.0,
+        "outer_radius": 10.0,
+        "thickness": 20.0,
+        "z_min": -10.0,
+        "z_max": 10.0,
+        "x_offset_callout": "12 (horizontal offset from central vertical centerline, dimensioned on drawing)",
+        "y_offset_derived": 76.1315,
+        "pitch_radius_from_origin": 77.0714,
+        "callout": "R 10 (boss), 12 (x-offset)",
+        "confidence": "high for R10/Ø20 and x=12 (both dimensioned); y=76.1315 is DERIVED (not dimensioned) - see derivation_of_lobe_height feature"
+      }
+    },
+    {
+      "type": "through_hole",
+      "name": "Upper lobe mounting hole Ø10",
+      "params": {
+        "center": [12.0, 76.1315, 0.0],
+        "axis": "Z",
+        "diameter": 10.0,
+        "radius": 5.0,
+        "through": true,
+        "depth": 20.0,
+        "callout": "ø10",
+        "concentric_with": "Upper lobe boss (Ø20 / R10, 20 mm thick)",
+        "confidence": "high - read directly; pixel-verified at 9.91 mm"
+      }
+    },
+    {
+      "type": "boss_lobe",
+      "name": "Lower lobe boss (Ø20 / R10, 20 mm thick)",
+      "params": {
+        "center": [-12.0, -76.1315, 0.0],
+        "center_rounded": [-12.0, -76.13, 0.0],
+        "axis": "Z",
+        "outer_diameter": 20.0,
+        "outer_radius": 10.0,
+        "thickness": 20.0,
+        "z_min": -10.0,
+        "z_max": 10.0,
+        "callout": "R 10 (boss), 12 (x-offset, mirrored)",
+        "symmetry": "180 deg rotational copy of the upper lobe about the Z axis through the origin (point symmetry). Pixel-verified: measured (-11.99, -76.15).",
+        "confidence": "high for R10/Ø20 and x=-12; y=-76.1315 derived"
+      }
+    },
+    {
+      "type": "through_hole",
+      "name": "Lower lobe mounting hole Ø10",
+      "params": {
+        "center": [-12.0, -76.1315, 0.0],
+        "axis": "Z",
+        "diameter": 10.0,
+        "radius": 5.0,
+        "through": true,
+        "depth": 20.0,
+        "callout": "ø10",
+        "concentric_with": "Lower lobe boss (Ø20 / R10, 20 mm thick)",
+        "confidence": "high"
+      }
+    },
+    {
+      "type": "web",
+      "name": "Connecting web / plate (10 mm thick, centered)",
+      "params": {
+        "thickness": 10.0,
+        "z_min": -5.0,
+        "z_max": 5.0,
+        "centered_on_midplane": true,
+        "step_per_side": 5.0,
+        "callout": "10",
+        "description": "The two S-curved arms connecting the central hub to each lobe boss are 10 mm thick, centered on the mid-plane, leaving a 5 mm step down from each 20 mm face. In the side view this reads as the narrow central band between the wide hub band and the wide boss bands.",
+        "confidence": "high - read directly; pixel-verified at 9.91 mm with 5.02 mm step per side"
+      }
+    },
+    {
+      "type": "arc_tangent_outer",
+      "name": "R100 convex outer arc - upper-left flank",
+      "params": {
+        "radius": 100.0,
+        "center": [60.0, 0.0],
+        "tangency": "Internally tangent to the Ø80 hub circle (distance from origin = 100 - 40 = 60) AND internally tangent to the upper R10 lobe boss (distance to lobe center = 100 - 10 = 90).",
+        "tangent_point_on_hub": [-40.0, 0.0],
+        "tangent_point_on_boss": [17.3333, 84.5906],
+        "sweep_description": "Sweeps from the tangent point on the hub at (-40, 0) counter-clockwise/upward along the left flank to the tangent point on the upper lobe boss.",
+        "callout": "R 100",
+        "confidence": "high - least-squares circle fit to traced profile pixels gave R=98.7 with center 58.57 mm from origin, matching the exact R100 / 60 mm construction"
+      }
+    },
+    {
+      "type": "arc_tangent_outer",
+      "name": "R100 convex outer arc - lower-right flank (mirror)",
+      "params": {
+        "radius": 100.0,
+        "center": [-60.0, 0.0],
+        "tangency": "Internally tangent to the Ø80 hub circle and internally tangent to the lower R10 lobe boss.",
+        "tangent_point_on_hub": [40.0, 0.0],
+        "tangent_point_on_boss": [-17.3333, -84.5906],
+        "symmetry": "180 deg rotational copy of the upper-left R100 arc about the Z axis.",
+        "callout": "R 100",
+        "confidence": "high"
+      }
+    },
+    {
+      "type": "arc_fillet_concave",
+      "name": "R35 concave transition fillet - upper-right (hub to upper lobe)",
+      "params": {
+        "radius": 35.0,
+        "center": [51.4823, 54.5403],
+        "center_rounded": [51.48, 54.54],
+        "tangency": "Externally tangent to the Ø80 hub circle (distance from origin = 35 + 40 = 75) AND externally tangent to the upper R10 lobe boss (distance to lobe center = 35 + 10 = 45). This is a concave (re-entrant) fillet cutting into the right side of the part.",
+        "tangent_point_on_hub": [27.4572, 29.0882],
+        "tangent_point_on_boss": [20.7738, 71.3313],
+        "callout": "R 35",
+        "confidence": "high - traced profile pixels on the right flank all measured 34.78-34.87 mm from the computed center (51.48, 54.54), confirming R35 and the tangency construction"
+      }
+    },
+    {
+      "type": "arc_fillet_concave",
+      "name": "R35 concave transition fillet - lower-left (hub to lower lobe, mirror)",
+      "params": {
+        "radius": 35.0,
+        "center": [-51.4823, -54.5403],
+        "tangency": "Externally tangent to the Ø80 hub circle and externally tangent to the lower R10 lobe boss.",
+        "tangent_point_on_hub": [-27.4572, -29.0882],
+        "tangent_point_on_boss": [-20.7738, -71.3313],
+        "symmetry": "180 deg rotational copy of the upper-right R35 fillet about the Z axis.",
+        "callout": "R 35",
+        "confidence": "high"
+      }
+    },
+    {
+      "type": "profile_loop",
+      "name": "Complete outer 2D profile (closed loop, 8 segments)",
+      "params": {
+        "construction_order": [
+          "1. Arc on upper lobe boss R10 about (12, 76.1315) - the convex cap of the upper ear, from the R35 tangent point (20.7738, 71.3313) around the top to the R100 tangent point (17.3333, 84.5906)",
+          "2. Arc R100 about (60, 0) - upper-left convex flank, down to hub tangent point (-40, 0)",
+          "3. Arc on hub R40 about (0,0) - short left arc from (-40, 0) to the lower R35 tangent point (-27.4572, -29.0882)",
+          "4. Arc R35 about (-51.4823, -54.5403) - lower-left concave fillet up to the lower boss tangent point (-20.7738, -71.3313)",
+          "5. Arc on lower lobe boss R10 about (-12, -76.1315) - convex cap of the lower ear to (-17.3333, -84.5906)",
+          "6. Arc R100 about (-60, 0) - lower-right convex flank to hub tangent point (40, 0)",
+          "7. Arc on hub R40 about (0,0) - short right arc from (40, 0) to (27.4572, 29.0882)",
+          "8. Arc R35 about (51.4823, 54.5403) - upper-right concave fillet closing back to (20.7738, 71.3313)"
+        ],
+        "all_junctions": "All eight junctions are G1 tangent (smooth). The profile is entirely arcs - there are no straight line segments in the outer profile.",
+        "symmetry": "C2 point symmetry: the whole profile maps to itself under 180 deg rotation about the Z axis at the origin. There is NO mirror symmetry (the part is chiral/S-shaped).",
+        "confidence": "high"
+      }
+    },
+    {
+      "type": "derivation",
+      "name": "derivation_of_lobe_height (the one non-dimensioned key value)",
+      "params": {
+        "question": "The drawing dimensions the lobe x-offset as 12 but never gives the lobe y-offset or the overall height directly.",
+        "method": "Solved from the R100 tangency chain. The R100 arc is internally tangent to both the Ø80 hub and the R10 boss, so its center P satisfies |P| = 100 - 40 = 60 and |P - L| = 100 - 10 = 90 where L = (12, H). A least-squares circle fit to the traced left-flank profile pixels placed P at (58.57, 0.44) - i.e. essentially exactly on the +X axis at (60, 0). Setting P = (60, 0) gives |P - L| = sqrt((60-12)^2 + H^2) = 90.",
+        "equation": "H = sqrt(90^2 - 48^2) = sqrt(8100 - 2304) = sqrt(5796)",
+        "result_exact": 76.13146198,
+        "result_rounded": 76.13,
+        "pixel_measured_value": 76.15,
+        "agreement": "0.02 mm - excellent",
+        "note": "The designer's intent was almost certainly to place the R100 center exactly on the horizontal centerline at (60, 0), which makes the R100 arc tangent to the hub exactly at (-40, 0) on the horizontal centerline. This is independently confirmed by the pixel scan across the center row, where BOTH left and right outer profile points measured exactly 40.0 mm from the center."
+      }
+    },
+    {
+      "type": "overall_envelope",
+      "name": "Overall dimensions (bounding box)",
+      "params": {
+        "overall_height_Y": 172.263,
+        "overall_height_derivation": "2 * (76.1315 + 10) = 172.263 mm, i.e. from the top of the upper R10 boss (y = +86.1315) to the bottom of the lower R10 boss (y = -86.1315).",
+        "overall_height_pixel_measured": 172.23,
+        "overall_width_X": 80.0,
+        "overall_width_note": "Exactly 80 mm, equal to the hub Ø80. The R100 arcs are tangent to the hub at (-40, 0) and (40, 0), and the lobe bosses only reach x = 12 + 10 = 22, so the hub itself sets the full width on both sides.",
+        "overall_thickness_Z": 20.0,
+        "bounding_box_min": [-40.0, -86.1315, -10.0],
+        "bounding_box_max": [40.0, 86.1315, 10.0],
+        "confidence": "high (derived); NOT explicitly dimensioned on the drawing"
+      }
+    },
+    {
+      "type": "surface_finish_marks",
+      "name": "Machining / surface-texture symbols",
+      "params": {
+        "location": "Two surface-texture flags on the side view, pointing at the two 20 mm-wide faces of the central hub (the left and right faces of the hub band at Y = 0).",
+        "meaning": "The hub end faces are to be machined. The specific roughness value is UNREADABLE at this thumbnail resolution - the flags carry no legible number.",
+        "confidence": "medium - symbols clearly present and located, value unreadable"
+      }
+    },
+    {
+      "type": "unresolved_symbol",
+      "name": "Small crossed-square symbol between the two views",
+      "params": {
+        "location_px": [1150, 765],
+        "appearance": "A small square containing an X (crossed diagonals), floating between the front and side views with no leader line and no adjacent text.",
+        "interpretation": "UNREADABLE / ambiguous. Most likely a general surface-finish or general-tolerance block placeholder, a drawing-template artifact, or a projection-method (first/third angle) marker rendered too small to resolve. It is NOT a dimensional callout and does not affect the geometry.",
+        "confidence": "low - flagged for human review"
+      }
+    }
+  ],
+  "notes": "TRANSCRIPTION OF EVERY CALLOUT ON THE DRAWING (9 total, complete): 12 | ø10 | R 10 | R 100 | R 35 | ø40 | ø80 | 20 | 10. There are NO other numeric callouts, NO angle callouts, NO chamfer callouts, and NO overall-dimension callouts anywhere on this drawing.\n\n=== RESOLUTION OF THE FIVE LISTED AMBIGUITIES ===\n\n(a) 3-LOBE BASE? -> NO. RESOLVED: the base is a TWO-LOBE (2-lobe) S-shaped/crank link, not 3-lobe and not a plain Ø108 flange. There is no Ø108 anywhere. The correct base is a Ø80 central hub with exactly TWO opposed R10 lobes at (12, +76.1315) and (-12, -76.1315), joined by R100 convex outer arcs and R35 concave fillets. Lobe radii = R10; lobe centers as given; the connecting arc radii/centers are R100 about (+/-60, 0) and R35 about (+/-51.4823, +/-54.5403). The part has C2 point symmetry (180 deg rotation), NOT 3-fold 120 deg symmetry.\n\n(b) 3x Ø10 MOUNTING HOLES? -> NO, there are exactly TWO Ø10 holes, not three. RESOLVED: they are NOT on a bolt-circle in the usual sense - they sit at the two lobe centers, at a pitch radius of 77.0714 mm from the origin (equivalently a Ø154.14 circle), positioned by the dimensioned x-offset of 12 mm plus the derived y-offset of 76.1315 mm. The two holes are 180 deg apart about the origin. Note the Ø10 callout IS on the drawing and IS correct - only the quantity (2, not 3) and the location were wrong in the skeleton.\n\n(c) CENTRAL TOWER Ø32/Ø19 vs Ø25 neck / Ø19 bore? -> BOTH WRONG. RESOLVED: there is no tower/neck at all - this is a flat plate, not a stepped shaft. The central feature is a hub of OD Ø80 with a Ø40 through-bore, 20 mm thick. Exact tower OD = 80.0 mm (Ø80), exact bore = 40.0 mm (Ø40). Neither Ø32, Ø19, nor Ø25 appears on the drawing.\n\n(d) 2x 45 DEG CHAMFER LOCATIONS? -> RESOLVED: THERE ARE NO CHAMFERS. No 45 deg callout, no chamfer callout, and no chamfer geometry exists on this drawing. I verified this by pixel-scanning the side view: every transition (the 20 mm hub band to the 10 mm web, and the web to the 20 mm boss bands) is a SQUARE STEP with a sharp 90 deg shoulder - the scanned edges are perfectly vertical/horizontal with no angled segments. The '2x 45 deg chamfer' in the skeleton is spurious. The only two 'paired features' that could have been misread as chamfers are the two 5 mm square steps per side where the 20 mm hub/boss thickness drops to the 10 mm web.\n\n(e) OVERALL HEIGHT? -> RESOLVED as 172.263 mm (derived, NOT dimensioned on the drawing). Derivation: 2 * (76.1315 + 10). Independently pixel-measured at 172.23 mm - agreement within 0.03 mm. If a round design value is preferred, the closest clean intent would be 172.26; but the exact analytic value sqrt(5796) + 10 doubled = 172.263 is what the tangency construction produces. Overall width is 80.0 mm and overall thickness is 20.0 mm.\n\n=== METHOD & CONFIDENCE ===\nDespite the low-resolution thumbnail, all nine callouts were legible and every derived value was independently cross-validated by direct pixel measurement of the 1998x1560 raster. Scale was established at 8.175 px/mm from the Ø40 bore and Ø80 hub (two independent measurements agreeing to 0.3%), with the front-view center located at pixel (561.0, 833.5). Cross-checks that passed: hub Ø measured 79.9 (nominal 80); bore Ø measured 40.0 (nominal 40); boss Ø measured 19.94 (nominal 20); hole Ø measured 9.91 (nominal 10); lobe offset measured (11.93, 76.15) and (-11.99, -76.15) versus nominal (+/-12, +/-76.1315); R100 least-squares fit returned R=98.7 centered 58.57 mm from origin versus the exact construction R=100 at 60 mm; R35 traced points measured 34.78-34.87 mm from the computed center versus nominal 35; thicknesses measured 19.94 and 9.91 versus nominal 20 and 10; overall height measured 172.23 versus derived 172.263.\n\nEXPLICITLY UNCERTAIN / FLAGGED ITEMS: (1) the lobe y-offset 76.1315 and the overall height 172.263 are DERIVED from tangency, not dimensioned - they are geometrically forced by the R100 construction and confirmed to 0.03 mm by measurement, but a designer's rounded intent of y=76 (overall 172.0) cannot be fully excluded from a thumbnail (est, low risk); (2) the surface-finish roughness values on the two hub-face flags are UNREADABLE; (3) the small crossed-square symbol between the views is UNREADABLE in purpose and is flagged for human review - it carries no dimensional content.\n\nBUILD RECOMMENDATION: model as a 2D profile (the 8-arc closed loop above) extruded 20 mm symmetric about Z=0, then remove material to leave the 10 mm web: pocket both faces by 5 mm everywhere except within R40 of the origin (the hub) and within R10 of each lobe center (the bosses). Finally cut the Ø40 central bore and the two Ø10 lobe holes through all. Discard the supplied skeleton entirely."
+}

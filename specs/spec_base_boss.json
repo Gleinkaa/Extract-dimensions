@@ -1,0 +1,208 @@
+{
+  "name": "Mechanical Bracket - Base, Boss and Slotted Upright",
+  "origin": "Origin (0,0,0) is at the bottom-left-front corner of the rectangular base: the corner where the base's left end face (X=0), its front face (Y=0) and its bottom face (Z=0) meet. All coordinates are absolute in this frame.",
+  "axes": "X = base length, increasing left-to-right, 0..95. Y = base depth, increasing front-to-back, 0..40. Z = height, increasing upward, 0..70. Right-handed frame. The boss axis and the Ø10 hole axis are parallel to Z.",
+  "units": "mm",
+  "features": [
+    {
+      "type": "box",
+      "name": "base_plate",
+      "params": {
+        "description": "Rectangular base slab, the primary datum of the part.",
+        "length_x": 95,
+        "depth_y": 40,
+        "height_z": 15,
+        "x_min": 0, "x_max": 95,
+        "y_min": 0, "y_max": 40,
+        "z_min": 0, "z_max": 15,
+        "top_face_z": 15,
+        "source_callouts": ["40", "15", "40", "40", "15"],
+        "note": "Length 95 is dimensioned as the chain 40 + 15 + 40 along the front bottom edge, where the middle 15 is the notch width. Depth 40 and height 15 are called out on the left end."
+      }
+    },
+    {
+      "type": "notch",
+      "name": "front_notch_15x3",
+      "params": {
+        "description": "Rectangular notch cut as a step DOWN into the TOP face of the base along its FRONT edge. It is NOT a cut in the front vertical face. Resolves ambiguity (c).",
+        "width_x": 15,
+        "depth_z": 3,
+        "x_min": 40, "x_max": 55,
+        "z_from": 15, "z_to": 12,
+        "y_min": 0, "y_max": 40,
+        "cut_through_depth": true,
+        "located_by": "The 40 + 15 + 40 chain along the base front bottom edge places the 15-wide notch between X=40 and X=55.",
+        "alignment": "The notch spans exactly the same X range as the upright web (X=40..55), i.e. it sits directly beneath the upright.",
+        "source_callouts": ["15", "3", "40", "40"]
+      }
+    },
+    {
+      "type": "cylinder_boss",
+      "name": "boss_D30",
+      "params": {
+        "description": "Cylindrical boss rising from the base top face, merged into the left side of the upright web. Resolves ambiguity (a): the boss is Ø30, NOT Ø25.",
+        "diameter": 30,
+        "radius": 15,
+        "axis_x": 15,
+        "axis_y": 20,
+        "axis_direction": "+Z",
+        "base_z": 15,
+        "top_z": 30,
+        "height_above_base_top": 15,
+        "top_face_height_from_part_bottom": 30,
+        "source_callouts": ["30", "15", "25", "\u00d810"],
+        "diameter_resolution": "Ø30 is confirmed three ways: (1) the '15' callout places the boss axis 15 mm from the base left end face, and the boss silhouette is tangent to that end face, so R=15 → Ø30; (2) the '25' callout gives the axis-to-upright-front-face distance, and 15 + 25 = 40 = the upright front face X, which is consistent only with R=15 reaching X=30; (3) with the axis at Y=20 in a 40-deep base, Ø30 leaves a symmetric 5 mm margin front and back, matching the drawn silhouette. Ø25 would leave a visibly larger margin than drawn."
+      }
+    },
+    {
+      "type": "hole",
+      "name": "boss_through_hole_D10",
+      "params": {
+        "description": "Through hole coaxial with the boss, drilled along the boss axis and continuing through the base.",
+        "diameter": 10,
+        "radius": 5,
+        "axis_x": 15,
+        "axis_y": 20,
+        "axis_direction": "+Z",
+        "z_from": 0,
+        "z_to": 30,
+        "through": true,
+        "concentric_with": "boss_D30",
+        "wall_thickness_at_boss": 10,
+        "source_callouts": ["\u00d810"]
+      }
+    },
+    {
+      "type": "upright_web",
+      "name": "upright_web",
+      "params": {
+        "description": "Vertical slab (web) standing on the base and rising to the top of the part.",
+        "thickness_x": 15,
+        "x_min": 40, "x_max": 55,
+        "depth_y": 40,
+        "y_min": 0, "y_max": 40,
+        "z_from": 15,
+        "z_to": 70,
+        "height_above_base_top": 55,
+        "overall_part_height": 70,
+        "front_face_x": 40,
+        "back_face_x": 55,
+        "axis_to_front_face_distance": 25,
+        "source_callouts": ["15", "25", "70"],
+        "note": "The 25 callout is measured from the boss axis (X=15) to the upright front face (X=40). Thickness 15 is called out on the top of the prongs."
+      }
+    },
+    {
+      "type": "slot",
+      "name": "u_slot_through_upright",
+      "params": {
+        "description": "U-shaped slot cut downward through the full thickness of the upright, splitting its top into two prongs. Open at the top.",
+        "width_y": 15,
+        "y_min": 12.5,
+        "y_max": 27.5,
+        "y_center": 20,
+        "cut_direction": "-Z from the top face",
+        "slot_depth": 30,
+        "top_z": 70,
+        "straight_side_walls_from_z": 70,
+        "straight_side_walls_to_z": 40,
+        "bottom_arc_type": "semicircular, tangent to both straight side walls",
+        "bottom_arc_radius": 7.5,
+        "bottom_arc_center_y": 20,
+        "bottom_arc_center_z": 40,
+        "lowest_point_z": 32.5,
+        "cut_through_x_from": 40,
+        "cut_through_x_to": 55,
+        "radius_resolution": "R7.5, NOT R12.5. The slot bottom radius is not labelled with an explicit R callout; it is a fully rounded U whose semicircular bottom is tangent to both 15-mm-spaced side walls, so R = 15/2 = 7.5 mm. A R12.5 bottom is geometrically impossible in a 15-wide slot.",
+        "source_callouts": ["15", "30"]
+      }
+    },
+    {
+      "type": "prong",
+      "name": "prong_front",
+      "params": {
+        "description": "Front prong of the upright, left of the slot in Y.",
+        "x_min": 40, "x_max": 55,
+        "y_min": 0, "y_max": 12.5,
+        "z_from": 15, "z_to": 70,
+        "width_y": 12.5,
+        "top_z": 70
+      }
+    },
+    {
+      "type": "prong",
+      "name": "prong_back",
+      "params": {
+        "description": "Back prong of the upright, right of the slot in Y.",
+        "x_min": 40, "x_max": 55,
+        "y_min": 27.5, "y_max": 40,
+        "z_from": 15, "z_to": 70,
+        "width_y": 12.5,
+        "top_z": 70
+      }
+    },
+    {
+      "type": "shelf",
+      "name": "boss_shelf_step",
+      "params": {
+        "description": "Flat horizontal shelf at the top of the boss, forming the step between the boss top and the upright. The dimension stack on the front-left prong edge reads, top-down: 30 (slot depth) then 10 (from slot bottom down to this shelf).",
+        "shelf_z": 30,
+        "distance_below_slot_bottom_flat": 10,
+        "measured_from_part_bottom": 30,
+        "source_callouts": ["30", "10"],
+        "chain_check": "shelf 30 + 10 = 40 (slot bottom) ; 40 + 30 (slot depth) = 70 = overall part height. The chain closes exactly."
+      }
+    },
+    {
+      "type": "fillet",
+      "name": "web_fillet_R30_front",
+      "params": {
+        "description": "First of the TWO R30 web fillets. Resolves ambiguity (b). Large concave tangent fillet blending the FRONT vertical face of the upright web (X=40) into the TOP face of the base (Z=15), on the front side of the part.",
+        "radius": 30,
+        "type_of_fillet": "concave tangent fillet (fillet, not round)",
+        "edge_filleted": "The horizontal edge where the upright front face X=40 meets the base top face Z=15",
+        "edge_runs_along": "Y axis",
+        "arc_center_x": 10,
+        "arc_center_z": 45,
+        "tangent_point_on_base_top": {"x": 10, "z": 15},
+        "tangent_point_on_web_face": {"x": 40, "z": 45},
+        "tangency": "Tangent to the base top plane Z=15 at X=10 and tangent to the upright front plane X=40 at Z=45.",
+        "source_callouts": ["R30"],
+        "note": "This fillet sweeps across the front of the part and visually merges with the boss, which is why the boss appears to flow into the base in the left-hand view."
+      }
+    },
+    {
+      "type": "fillet",
+      "name": "web_fillet_R30_back",
+      "params": {
+        "description": "Second of the TWO R30 web fillets. Resolves ambiguity (b). Large concave tangent fillet blending the BACK vertical face of the upright web (X=55) into the TOP face of the base (Z=15), on the right/back side of the part.",
+        "radius": 30,
+        "type_of_fillet": "concave tangent fillet (fillet, not round)",
+        "edge_filleted": "The horizontal edge where the upright back face X=55 meets the base top face Z=15",
+        "edge_runs_along": "Y axis",
+        "arc_center_x": 85,
+        "arc_center_z": 45,
+        "tangent_point_on_base_top": {"x": 85, "z": 15},
+        "tangent_point_on_web_face": {"x": 55, "z": 45},
+        "tangency": "Tangent to the base top plane Z=15 at X=85 and tangent to the upright back plane X=55 at Z=45.",
+        "source_callouts": ["R30"],
+        "note": "The two R30 fillets are on OPPOSITE faces of the same upright web (front X=40 and back X=55), both blending down to the base top face. They are NOT two fillets on the same side."
+      }
+    },
+    {
+      "type": "step",
+      "name": "back_shoulder_step_5",
+      "params": {
+        "description": "Small 5 mm step/offset at the top of the R30 back fillet, where the back fillet's upper tangent region meets the upright back face. Called out as '5' with a leader on the right-hand side.",
+        "size": 5,
+        "measured_along": "X",
+        "location_x_from": 55,
+        "location_x_to": 60,
+        "at_z_approximately": 45,
+        "source_callouts": ["5"],
+        "confidence": "The 5 is clearly legible; it dimensions the narrow offset between the upright back face and the start of the R30 back fillet's tangent run."
+      }
+    }
+  ],
+  "notes": "PROJECTION: drawing is titled '3rd angle of Projection.' and 'Scale : 1.5:1', but the sheet actually shows a single pictorial ISOMETRIC view rather than orthographic views. All dimensions below were read from that isometric.\n\nCOMPLETE DIMENSION TRANSCRIPTION (every callout on the sheet, in reading order): 15, 15 (prong width and slot width across the top of the upright); 30 (slot depth, on the front-left prong edge); 10 (from slot bottom down to the boss shelf, same stack); 15 (right prong width, upper right); 5 (right-hand shoulder step); R30 (upper-right fillet); 15 (boss axis to base left end); Ø10 (boss through hole); 25 (boss axis to upright front face); 30 (boss/shelf top height from part bottom, left side); R30 (lower/front fillet); 15 (base height, left end); 40 (base depth, left end); 15 (notch width, front bottom edge); 3 (notch depth, front bottom edge); 40, 40 (the two outer segments of the 95 length chain along the front bottom edge). Overall part height 70 and overall length 95 are derived, not directly lettered.\n\nAMBIGUITY RESOLUTIONS:\n(a) BOSS DIAMETER = Ø30, not Ø25. The '15' callout sets the boss axis 15 mm from the base left end face and the boss silhouette is drawn tangent to that end face, forcing R=15. This is corroborated by 15 + 25 = 40 = the upright front face position, and by the symmetric 5 mm front/back margin of a Ø30 circle inside the 40-deep base.\n(b) THE TWO R30 FILLETS are on OPPOSITE faces of the single upright web: one blends the web FRONT face (X=40) down into the base top face, the other blends the web BACK face (X=55) down into the base top face. Both are concave tangent fillets whose arc centres lie at Z=45, at X=10 and X=85 respectively. Each is tangent to the base top plane and to its web face.\n(c) YES, there is a 15 x 3 notch, but it is a step cut DOWN INTO THE TOP FACE of the base along the front edge, spanning X=40..55 (directly under the upright) and 3 mm deep (Z=15 down to Z=12). It is not a cut in the front vertical face. The 40 + 15 + 40 chain locates it exactly.\n(d) OTHER FEATURES: the U-slot bottom is a fully rounded semicircular R7.5 arc tangent to both side walls (NOT R12.5 - that radius cannot fit a 15-wide slot). There is a 5 mm shoulder step on the back side near the top of the back R30 fillet. No chamfers, no rounded outer corners on the base, and no additional holes are shown anywhere on the drawing; the Ø10 boss hole is the only hole.\n\nDERIVED HEIGHT CHAIN (closes exactly): base top Z=15; boss/shelf top Z=30; slot bottom flat Z=40 (shelf + 10); slot lowest point Z=32.5 (arc R7.5); upright top Z=70 (slot bottom 40 + slot depth 30) = overall height 70, matching the stated model height.\n\nUNREADABLE ITEMS: none of the lettered callouts were unreadable. The only value not printed on the sheet is the U-slot bottom radius, which is derived as R7.5 from the 15 mm slot width and the fully-rounded tangent bottom (geometrically exact, not an estimate). The exact Y-position of the 5 mm shoulder step's vertical extent is inferred from the fillet tangency at Z=45 (est)."
+}

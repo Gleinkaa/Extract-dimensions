@@ -1,0 +1,278 @@
+{
+  "name": "Stepped Arm Bracket with Bored Boss, Slotted Legs and Rounded Foot (AutoCAD para todos isometric exercise)",
+  "origin": "Origin (0,0,0) is the bottom-left-front corner of the part's bounding box: X=0 at the LEFT end face of the horizontal arm, Y=0 at the FRONT face of the part, Z=0 at the LOWEST point of the part (the underside of the rounded foot, which is also the underside of the whole part). All coordinates below are absolute in this single frame.",
+  "axes": "Right-handed. X = width, increasing left-to-right, 0..105 (the direction the arm and the boss axis run). Y = depth, increasing front-to-back, 0..50 (the direction the legs and the slot run). Z = height, increasing upward, 0..80. The Ø40 boss and its Ø30 through-bore are cylinders whose common axis is PARALLEL TO X. The main web is a vertical plate whose faces are normal to X and whose profile lies in the Y-Z plane.",
+  "units": "mm",
+  "features": [
+    {
+      "type": "reference",
+      "name": "dimension_transcription",
+      "params": {
+        "description": "Complete transcription of every dimension callout legible on the drawing, grouped by the dimension band it belongs to. All values are millimetres. No tolerances, no angle callouts and no explicit R callouts appear anywhere on this drawing.",
+        "top_band_upper_chain_along_X": {
+          "overall": 60,
+          "segments": [25, 30, 5],
+          "check": "25 + 30 + 5 = 60",
+          "meaning": "Measured along X starting at the arm/web junction plane X=45. 25 reaches the web's near (left) face at X=70; 30 reaches the boss axis at X=100; 5 reaches the boss outer face / rear of the bounding box at X=105."
+        },
+        "top_band_lower_chain_along_X": {
+          "overall": 45,
+          "segments": [15],
+          "meaning": "Measured along X from the arm's left end face X=0. 15 locates the step riser of the raised tier; 45 is the full arm length up to the arm/web junction plane X=45."
+        },
+        "left_face_heights_along_Z": [28, 20],
+        "left_face_heights_meaning": "Two stacked vertical dimensions on the arm's left end face. 20 = height of the LOWER (outboard) tier of the arm. 28 = height of the RAISED (inboard) tier of the arm. Both measured up from the arm's underside at Z=30. The difference 28 - 20 = 8 is the step rise.",
+        "left_overall_heights_along_Z": [80, 30],
+        "left_overall_heights_meaning": "80 = overall part height, Z=0 (foot underside) to Z=80 (top of the web / top of the semicircular head). 30 = from Z=0 up to the arm's underside at Z=30.",
+        "right_band_along_Z": [45],
+        "right_band_meaning": "45 = vertical distance from the boss/bore axis at Z=60 down to the shoulder at Z=15, where the web's straight tapered right edge ends and the right leg's vertical right face begins.",
+        "right_band_overall_along_Z": [80],
+        "foot_height_along_Z": [20],
+        "foot_height_meaning": "20 = height of the rounded foot tab, from Z=0 to Z=20. Because its right end is a full half-round, this fixes the foot nose radius at R10.",
+        "bottom_band_along_Y": {
+          "overall": 50,
+          "segments": [20, 15, 15],
+          "check": "20 + 15 + 15 = 50",
+          "meaning": "Measured along Y across the bottom of the legs. 20 = front leg thickness (Y 0..20); 15 = slot width (Y 20..35); 15 = rear leg thickness (Y 35..50)."
+        },
+        "right_leg_and_foot_along_Y": [25, 15],
+        "right_leg_and_foot_meaning": "25 = depth in Y of the right leg's upper block. 15 = depth in Y of the rounded foot tab.",
+        "diameters": ["\u00d840", "\u00d830"],
+        "diameters_meaning": "\u00d840 = outside diameter of the cylindrical boss pad. \u00d830 = the through-bore drilled coaxially through the boss and the web head.",
+        "title_block_text": "Autocad para todos (watermark, not a dimension)",
+        "unreadable": "None. Every callout was resolved to an exact integer. The only glyph that required extra magnification was the 28 on the arm's left face (it could superficially be read as 26); at high magnification the second glyph shows two stacked bowls, so it is an 8, and 20 + 8 = 28 is confirmed by the step geometry."
+      }
+    },
+    {
+      "type": "plate",
+      "name": "main_web_plate",
+      "params": {
+        "description": "The central vertical plate that carries everything else. Its faces are normal to X, so its profile is drawn in the Y-Z plane and it is extruded along X. Its top end is a full semicircular head; its right side runs down as a straight tapered edge tangent to that head.",
+        "extrude_axis": "X",
+        "x_min": 70,
+        "x_max": 100,
+        "thickness_x": 30,
+        "profile_plane": "Y-Z",
+        "profile_outline_YZ": [
+          {"seg": "line", "from": [0, 15], "to": [0, 60], "note": "front-left vertical edge of the web, from the shoulder up to the head centre height"},
+          {"seg": "arc", "type": "semicircle", "center": [25, 60], "radius": 20, "from": [5, 60], "to": [45, 60], "through": [25, 80], "note": "the semicircular head, R20, centred on the bore axis at Y=25, Z=60; its crown reaches Z=80"},
+          {"seg": "line", "from": [45, 60], "to": [50, 15], "note": "straight tapered right edge, running down and back from the head tangency to the shoulder; this is the edge the 45 dimension measures against"},
+          {"seg": "line", "from": [50, 15], "to": [0, 15], "note": "the shoulder line closing the profile onto the legs below"}
+        ],
+        "profile_note": "Coordinates in the profile list are [Y, Z] pairs in the global frame. Below Z=15 the web continues without interruption into the legs, so the plate and the legs are one solid; the outline above is only the part of the boundary that is unique to the web.",
+        "head_center": {"y": 25, "z": 60},
+        "head_radius": 20,
+        "overall_height_z": 80,
+        "source_callouts": ["80", "45", "\u00d840", "30"],
+        "note": "The head radius R20 is NOT called out directly. It is derived: the head is drawn as a full semicircle concentric with the \u00d840 boss, and the overall height 80 minus the head centre Z=60 gives exactly 20, which also equals the \u00d840 boss radius. The head and the boss are therefore the same radius and concentric."
+      }
+    },
+    {
+      "type": "cylinder_boss",
+      "name": "bore_boss_D40",
+      "params": {
+        "description": "Cylindrical boss pad standing proud of the web's far (right) face, coaxial with the semicircular head. Resolves the earlier misreading that treated this as a plain lug arc in the XY plane: the boss axis is parallel to X, not Z.",
+        "axis": "X",
+        "diameter": 40,
+        "radius": 20,
+        "axis_point": {"y": 25, "z": 60},
+        "x_start": 100,
+        "x_end": 105,
+        "protrusion_x": 5,
+        "protrudes_from": "the web's far face at X=100, projecting in +X to X=105",
+        "source_callouts": ["\u00d840", "5", "30"],
+        "note": "The 5 segment of the top chain is exactly this protrusion. The 30 segment places the axis at X=100. The boss blends flush into the web head because both have radius 20 and share the axis, so no visible circular edge appears where they meet on the near side."
+      }
+    },
+    {
+      "type": "hole",
+      "name": "main_through_bore_D30",
+      "params": {
+        "description": "The main through-bore, drilled along X, coaxial with the boss and the web head. It passes completely through the boss and the web plate.",
+        "axis": "X",
+        "diameter": 30,
+        "radius": 15,
+        "axis_point": {"y": 25, "z": 60},
+        "x_start": 70,
+        "x_end": 105,
+        "through_length_x": 35,
+        "through_all": true,
+        "wall_thickness_radial": 5,
+        "source_callouts": ["\u00d830"],
+        "note": "Radial wall between the \u00d830 bore and the \u00d840 boss is (40-30)/2 = 5 mm. The bore breaks out of the web's near face at X=70 and out of the boss face at X=105."
+      }
+    },
+    {
+      "type": "arm",
+      "name": "upper_left_arm",
+      "params": {
+        "description": "The horizontal arm cantilevered to the LEFT from the web. It carries the stepped raised tier. Its underside is flat at Z=30 and it is 20 mm deep in Y.",
+        "x_min": 0,
+        "x_max": 45,
+        "length_x": 45,
+        "y_min": 0,
+        "y_max": 20,
+        "depth_y": 20,
+        "underside_z": 30,
+        "source_callouts": ["45", "30", "20"],
+        "note": "The arm's depth in Y is 20, matching the front leg's 20 thickness, so the arm and the front leg are flush at Y=0 and Y=20. The arm merges into the web plate at X=45; between X=45 and X=70 the arm's material continues as the shoulder/upper region that blends into the web head."
+      }
+    },
+    {
+      "type": "step_raised_tier",
+      "name": "arm_raised_tier_step",
+      "params": {
+        "description": "RESOLVES AMBIGUITY (a). This is a RAISED TIER, not a top notch. The arm's top face sits at two levels: the outboard 15 mm at the LOW level, and everything inboard of that at a level 8 mm HIGHER. The previous build wrongly cut a notch downward into the inboard region; in fact material is ADDED (or equivalently, the outboard 15 mm is the lower step).",
+        "low_tier": {
+          "x_min": 0,
+          "x_max": 15,
+          "width_x": 15,
+          "top_face_z": 50,
+          "height_above_arm_underside": 20,
+          "source_callouts": ["15", "20"]
+        },
+        "raised_tier": {
+          "x_min": 15,
+          "x_max": 45,
+          "width_x": 30,
+          "top_face_z": 58,
+          "height_above_arm_underside": 28,
+          "source_callouts": ["28", "45"],
+          "width_derivation": "45 - 15 = 30"
+        },
+        "step_riser": {
+          "at_x": 15,
+          "rise_z": 8,
+          "from_z": 50,
+          "to_z": 58,
+          "face_normal": "-X (the riser faces left, toward the arm's free end)",
+          "spans_full_depth_y": true,
+          "y_min": 0,
+          "y_max": 20,
+          "derivation": "28 - 20 = 8"
+        },
+        "step_rectangle_exact": {
+          "x_min": 15,
+          "x_max": 45,
+          "y_min": 0,
+          "y_max": 20,
+          "z_min": 50,
+          "z_max": 58,
+          "size": "30 (X) x 20 (Y) x 8 (Z)"
+        },
+        "note": "The step riser runs the full 20 mm depth of the arm, so in the isometric view it reads as a clean L-shaped profile when the arm is viewed from the front. The 15 dimension measures from the arm's left end face to the riser."
+      }
+    },
+    {
+      "type": "leg",
+      "name": "front_leg",
+      "params": {
+        "description": "The FRONT of the two legs. It hangs below the web's shoulder and is the leg the arm sits flush with.",
+        "y_min": 0,
+        "y_max": 20,
+        "thickness_y": 20,
+        "z_min": 20,
+        "z_max": 15,
+        "bottom_face_z": 20,
+        "top_boundary_z": 15,
+        "x_min": 70,
+        "x_max": 100,
+        "source_callouts": ["20", "50"],
+        "note": "The front leg's bottom face is at Z=20, i.e. it stops level with the top of the rounded foot. It does NOT reach Z=0; only the rounded foot reaches the very bottom. z_min/z_max above are recorded as bottom_face_z=20 and the shoulder at Z=15 is where it merges into the web above."
+      }
+    },
+    {
+      "type": "leg",
+      "name": "rear_leg",
+      "params": {
+        "description": "The REAR of the two legs, at the back of the part. This is the leg that continues downward and to the right into the rounded foot.",
+        "y_min": 35,
+        "y_max": 50,
+        "thickness_y": 15,
+        "bottom_face_z": 20,
+        "x_min": 70,
+        "x_max": 100,
+        "source_callouts": ["15", "50", "25"],
+        "note": "Its thickness 15 is the third segment of the 20 + 15 + 15 = 50 bottom chain. The 25 callout gives the depth in Y of the right leg's upper block region."
+      }
+    },
+    {
+      "type": "slot",
+      "name": "slot_between_legs",
+      "params": {
+        "description": "RESOLVES AMBIGUITY (b). The slot is an open-bottom rectangular notch cut UP from the underside, separating the FRONT leg from the REAR leg. It is a slot in the Y direction between the two legs, open downward, and it runs all the way through in X.",
+        "which_legs": "Between the FRONT leg (Y 0..20) and the REAR leg (Y 35..50). The slot is the material removed between them.",
+        "y_min": 20,
+        "y_max": 35,
+        "width_y": 15,
+        "z_min": 20,
+        "z_max": 40,
+        "height_z": 20,
+        "open_at_bottom": true,
+        "roof_z": 40,
+        "x_min": 70,
+        "x_max": 100,
+        "through_in_x": true,
+        "source_callouts": ["15", "20", "50"],
+        "derivation": "Width 15 is the middle segment of the 20 + 15 + 15 = 50 bottom chain. Height 20 is the vertical callout on the slot's inner wall, measured up from the legs' bottom face at Z=20, giving a roof at Z=40.",
+        "note": "The slot's roof at Z=40 is a flat horizontal face. The slot is open downward (it has no floor) and open on both X faces, so it is a straight-through channel of cross-section 15 (Y) x 20 (Z)."
+      }
+    },
+    {
+      "type": "foot_tab",
+      "name": "rounded_foot",
+      "params": {
+        "description": "RESOLVES AMBIGUITY (c). A horizontal tab projecting to the RIGHT (+X) from the bottom of the REAR leg, whose free right end is a FULL HALF-ROUND. It is the lowest feature of the part and defines Z=0.",
+        "which_corner": "The BOTTOM-RIGHT corner of the part, on the REAR leg side. The rounding is on the tab's free (+X) end, not on a leg's inner corner.",
+        "radius": 10,
+        "radius_derivation": "The tab is 20 mm tall (Z=0..20) and its end is drawn as a full semicircle spanning that whole height, so R = 20/2 = 10. There is no explicit R callout on the drawing; R10 is derived from the 20 height. This is exact, not an estimate.",
+        "arc_type": "semicircular end (180 degrees), tangent to both the tab's flat bottom face at Z=0 and its flat top face at Z=20",
+        "tangency": "The arc is tangent to the bottom face (Z=0) at its lowest point and tangent to the top face (Z=20) at its highest point; the arc centre lies on the tab's mid-height line Z=10.",
+        "arc_center": {"x": 105, "z": 10},
+        "arc_plane": "X-Z",
+        "x_min": 70,
+        "x_max": 115,
+        "x_flat_end": 105,
+        "z_min": 0,
+        "z_max": 20,
+        "height_z": 20,
+        "y_min": 35,
+        "y_max": 50,
+        "depth_y": 15,
+        "source_callouts": ["20", "15", "80"],
+        "note": "Depth in Y is 15, matching the rear leg's thickness, so the foot is flush with the rear leg on both its Y faces. The straight portion runs from the leg out to X=105 and the half-round then sweeps from X=105 to the extreme tip at X=115. The overall 80 height is measured from this tab's underside at Z=0 up to the web crown at Z=80."
+      }
+    },
+    {
+      "type": "shoulder",
+      "name": "right_shoulder_and_taper",
+      "params": {
+        "description": "The straight tapered edge on the right of the web, and the shoulder where it lands. This is what the right-hand 45 dimension measures against.",
+        "taper_from": {"y": 45, "z": 60, "note": "tangency point on the semicircular head"},
+        "taper_to": {"y": 50, "z": 15, "note": "the shoulder"},
+        "shoulder_z": 15,
+        "tangent_to_head": true,
+        "source_callouts": ["45"],
+        "note": "The 45 callout runs from the bore axis level Z=60 down to the shoulder at Z=15 (60 - 45 = 15). The taper is drawn tangent to the R20 head, which is the standard construction for this exercise."
+      }
+    },
+    {
+      "type": "envelope",
+      "name": "bounding_box",
+      "params": {
+        "description": "Overall bounding box of the finished part, for verification against the stated envelope.",
+        "x_min": 0,
+        "x_max": 115,
+        "y_min": 0,
+        "y_max": 50,
+        "z_min": 0,
+        "z_max": 80,
+        "size_x": 115,
+        "size_y": 50,
+        "size_z": 80,
+        "note": "X reaches 105 for the dimensioned body (45 arm + 60 chain = 105, which matches the stated ~105 envelope). The rounded foot's half-round tip adds a further 10 mm, so the true extreme is X=115. Y=50 matches the stated 50 depth. Z=80 is the overall height; the stated '90 Y up' in the brief does not appear on this drawing - the drawing's overall height callout is unambiguously 80."
+      }
+    }
+  ],
+  "notes": "FRAME: X = width (arm and bore axis direction), Y = depth (leg and slot direction), Z = height. Origin at the part's bottom-left-front. KEY CORRECTIONS to the previous build: (1) The bore is NOT a Z-axis hole through a lug in an XY web profile. The main web is a vertical plate whose faces are normal to X, and the \u00d830 bore runs horizontally along X through a \u00d840 boss that protrudes 5 mm from the web's far face. The web's top is a full R20 semicircular head concentric with the boss, centred at Y=25, Z=60. (2) AMBIGUITY (a) - the arm feature is a RAISED TIER, not a top notch. The outboard 15 mm of the arm is the LOW level with its top at Z=50 (height 20 above the arm underside at Z=30); from X=15 to X=45 the top is 8 mm HIGHER at Z=58 (height 28). The exact step rectangle is X 15..45, Y 0..20, Z 50..58, i.e. 30 x 20 x 8, with the riser facing -X at X=15 and spanning the full 20 mm arm depth. (3) AMBIGUITY (b) - the slot lies between the FRONT leg (Y 0..20) and the REAR leg (Y 35..50). It is 15 wide in Y, 20 tall in Z, open at the bottom, with its roof at Z=40, and it runs straight through in X from X=70 to X=100. It comes from the 20 + 15 + 15 = 50 bottom chain plus the vertical 20 on the slot wall. (4) AMBIGUITY (c) - the rounded foot is a tab on the BOTTOM-RIGHT of the REAR leg, 15 deep in Y and 20 tall in Z, whose free +X end is a full half-round of R10 (derived exactly from the 20 height; no R callout is printed). Its arc centre is X=105, Z=10, tangent to both the Z=0 bottom face and the Z=20 top face. DERIVED (not printed) VALUES: R20 head radius (= \u00d840/2, and = 80 - 60), R10 foot radius (= 20/2), the 8 mm step rise (= 28 - 20), the 30 mm raised-tier width (= 45 - 15), and the 5 mm bore-to-boss radial wall (= (40-30)/2). Everything else is transcribed verbatim. No dimension on this drawing was unreadable, and no tolerances or angles are specified."
+}
