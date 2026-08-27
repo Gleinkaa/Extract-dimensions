@@ -7,3 +7,8 @@ venv/
 # Output artifacts
 output/
 *.scad
+
+# STEP/mesh exports live in ~/data/cad-exports/<slug>/ per brain/31-cad-workspace.md
+*.stp
+*.step
+*.stl

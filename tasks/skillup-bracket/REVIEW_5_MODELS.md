@@ -66,11 +66,11 @@ The **actual** Exercise 173 drawing (`OIP-366831756.jpg`, SolidWorks "Exercise 1
 - 2×45° top chamfer
 - stiffening ribs R1/R2, thickness 3, total height 76
 
-**Action:** rebuild #5 from `specs/spec_ex173_housing.json` against `OIP-366831756.jpg` (the "housing" spec the prior session wrongly discarded as a misread). The current `ex173.stp` is invalid.
+**Action:** rebuild #5 from `tasks/ex173/spec_housing_disputed.json` against `OIP-366831756.jpg` (the "housing" spec the prior session wrongly discarded as a misread). The current `ex173.stp` is invalid.
 
 ## Recommended next steps (ordered)
 
-1. **#5 ex173 — rebuild** from `spec_ex173_housing.json` + `OIP-366831756.jpg` (3-lobe housing). Gate + export `ex173.stp`. This is the only blocking issue.
+1. **#5 ex173 — rebuild** from `tasks/ex173/spec_housing_disputed.json` + `OIP-366831756.jpg` (3-lobe housing). Gate + export `ex173.stp`. This is the only blocking issue.
 2. **#4 autocad_bracket — minor fix** the C1 hub pad to straddle the plate (symmetric Ø40×6), re-render, re-gate, re-export.
 3. **#2 base_boss — optional** if Ø25 semi-cylindrical boss form is required, adjust; otherwise ship as-is.
 4. **#1, #3 — ship** as-is (MATCH).

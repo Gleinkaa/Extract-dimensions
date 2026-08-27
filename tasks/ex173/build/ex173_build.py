@@ -1,5 +1,5 @@
 # Exercise 173 — Two-lobe crank link plate (example5-2094245636.png).
-# CORRECTED: the drawing is an S-shaped 2-lobe link (specs/spec_ex173.json), NOT a housing.
+# CORRECTED: the drawing is an S-shaped 2-lobe link (../spec.json), NOT a housing.
 # Same geometry family as rocker_arm (#1, verified MATCH): hub O80/O40 bore, two R10 lobes at
 # B=(12,sqrt(5796)) and -B with O10 holes, R100 flanks about (+-60,0), R35 concave fillets
 # about (+-51.4823, +-54.5403); 8-arc G1 profile; web 10 thick (sym +-5), pads 20 thick (sym +-10).

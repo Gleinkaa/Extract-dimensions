@@ -1,5 +1,12 @@
 # HANDOFF — Geometry pipeline → Fusion: review gate + fix #2–#5
 
+> **Paths moved 2026-08-27.** The five parts now live in `tasks/<slug>/`
+> (`autocad-bracket`, `base-boss`, `ex173`, `rocker-arm`, `step-bracket`), each with
+> `spec.json` and `build/`. STEP exports moved out of git to
+> `~/data/cad-exports/<slug>/`. `inspect_v5.py` and `render_generic.py` stayed at the
+> repo root — they are part-agnostic. See `tasks/README.md` and
+> `brain/31-cad-workspace.md`.
+
 **From:** deepseek-v4-pro session (DSH, workspace /home/nik/dev/Extract-dimensions)
 **Written:** after user said "context is quite full, kick it into a new session"
 
@@ -43,7 +50,7 @@ re-export.
 
 ## 4. Build scripts (all in /home/nik/dev/Extract-dimensions/, all self-cleaning + timeline cleanup)
 
-`rocker_arm_build.py` (cleanup FIXED; verified 1 body, vol 115627.3) · `base_boss_build.py` · `step_bracket_build.py` · `autocad_bracket_build.py` · `ex173_build.py` · driver `desktop_fusion_client.py`
+`rocker_arm_build.py` (cleanup FIXED; verified 1 body, vol 115627.3) · `base_boss_build.py` · `step_bracket_build.py` · `tasks/autocad-bracket/build/autocad_bracket_build.py` · `ex173_build.py` · driver `desktop_fusion_client.py`
 
 ## 5. Review-with-subagent — THE CORRECTED PIPELINE STEP (user callout, do NOT skip)
 

@@ -1,4 +1,4 @@
-# Stepped bracket (OIP-479997622.jpg) — REBUILD per corrected spec (specs/spec_step_bracket.json, Reading B).
+# Stepped bracket (OIP-479997622.jpg) — REBUILD per corrected spec (../spec.json, Reading B).
 # Frame: spec X=width 0..115 (arm + web + boss + foot), Y=depth 0..50 (legs + slot), Z=height 0..80.
 # Fusion mapping: (fx, fy, fz) = (specX, specZ, specY).  Fusion: X right, Y UP, Z depth.
 #

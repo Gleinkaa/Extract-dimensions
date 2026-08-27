@@ -1,5 +1,12 @@
 # HANDOFF — Fusion pipeline, next session
 
+> **Paths moved 2026-08-27.** The five parts now live in `tasks/<slug>/`
+> (`autocad-bracket`, `base-boss`, `ex173`, `rocker-arm`, `step-bracket`), each with
+> `spec.json` and `build/`. STEP exports moved out of git to
+> `~/data/cad-exports/<slug>/`. `inspect_v5.py` and `render_generic.py` stayed at the
+> repo root — they are part-agnostic. See `tasks/README.md` and
+> `brain/31-cad-workspace.md`.
+
 **From:** deepseek-v4-flash session (DSH, workspace /home/nik/dev/Extract-dimensions)
 **Written:** Aug 22, at session start. Supersedes `HANDOFF_pipeline_review.md` (§8 checklist: items 2–3 remain; item 2 is now largely DONE — see §5).
 
@@ -9,13 +16,13 @@ All 5 parts are built, gated, and exported to `D:\fusion_parts\*.stp` (verified 
 
 | # | Part | Gate verdict | STEP |
 |---|---|---|---|
-| 1 | rocker_arm | ✅ MATCH (re-verified, pixel-quantified: R100 centers (±60,0), lobes ±12/±76.13) | rocker_arm.stp |
-| 2 | base_boss | ✅ MATCH (both R30 fillets + 15×3 notch were already in the script; ran + gated) | base_boss.stp |
-| 3 | step_bracket | ✅ MINOR-DIFF (strict items pass; "flat crown"/arm-depth flags disproven by direct geometry: R20 arcs exact) | step_bracket.stp |
-| 4 | autocad_bracket | ✅ MATCH after v5.1 fix (raised pad joined on plate top, Ø20 bore through) | autocad_bracket.stp |
-| 5 | ex173 | ✅ MATCH (drawing is a 2-lobe link plate, same as #1; housing spec was a misread) | ex173.stp |
+| 1 | rocker_arm | ✅ MATCH (re-verified, pixel-quantified: R100 centers (±60,0), lobes ±12/±76.13) | ~/data/cad-exports/rocker-arm/rocker_arm.stp |
+| 2 | base_boss | ✅ MATCH (both R30 fillets + 15×3 notch were already in the script; ran + gated) | ~/data/cad-exports/base-boss/base_boss.stp |
+| 3 | step_bracket | ✅ MINOR-DIFF (strict items pass; "flat crown"/arm-depth flags disproven by direct geometry: R20 arcs exact) | ~/data/cad-exports/step-bracket/step_bracket.stp |
+| 4 | autocad_bracket | ✅ MATCH after v5.1 fix (raised pad joined on plate top, Ø20 bore through) | ~/data/cad-exports/autocad-bracket/autocad_bracket.stp |
+| 5 | ex173 | ✅ MATCH (drawing is a 2-lobe link plate, same as #1; housing spec was a misread) | ~/data/cad-exports/ex173/ex173.stp |
 
-Notable discoveries this session: (a) **#5 ex173's drawing (example5-2094245636.png) is the same 2-lobe link plate as #1 rocker_arm** — the "housing" reading (spec_ex173_housing.json) is a misread; build per spec_ex173.json. (b) This Fusion build lacks public constructors for OffsetStartDefinition/DistanceExtentDefinition — use `setByOffset` construction planes instead. (c) The YZ-plane sketch maps su→−Z (mirror profiles). (d) `ssh` needs `-F /dev/null` inside the DSH sandbox. (e) The anthropic/claude-opus-5 workflow-agent route is broken in this harness; the gate runs via modlens-backed subagents instead.
+Notable discoveries this session: (a) **#5 ex173's drawing (example5-2094245636.png) is the same 2-lobe link plate as #1 rocker_arm** — the "housing" reading (tasks/ex173/spec_housing_disputed.json) is a misread; build per tasks/ex173/spec.json. (b) This Fusion build lacks public constructors for OffsetStartDefinition/DistanceExtentDefinition — use `setByOffset` construction planes instead. (c) The YZ-plane sketch maps su→−Z (mirror profiles). (d) `ssh` needs `-F /dev/null` inside the DSH sandbox. (e) The anthropic/claude-opus-5 workflow-agent route is broken in this harness; the gate runs via modlens-backed subagents instead.
 
 The rest of this doc is historical context; §5–§8 (v5 details, status table, next steps) are now DONE unless re-verification of the minor-diff items is wanted.
 
@@ -39,7 +46,7 @@ The rest of this doc is historical context; §5–§8 (v5 details, status table,
 
 - **Client:** `python3 desktop_fusion_client.py status | py '<code>' | run <file.py> | bodies | design`
 - **Bridge API:** `GET /status`; `POST /command {"command","params"}`. Commands: `get_active_design`, `get_bodies`, `get_sketches`, `export_design` (stl|step|f3d|iges, path no-extension), `save_design`, **`run_python`** (pre-binds `adsk/app/ui/design/math/json`; set `result` for JSON).
-- **No capture_viewport on the bridge.** Render via: `vp.visualStyle=Shaded` → `vp.goHome()` → `vp.isometricView()` → `vp.fit()` → `vp.saveAsImageFile("D:\\fusion_parts\\<name>.png", 1000, 750)`. See `render_autocad_v5.py` for an explicit-camera example (iso / top / side with `cam.isFitView`).
+- **No capture_viewport on the bridge.** Render via: `vp.visualStyle=Shaded` → `vp.goHome()` → `vp.isometricView()` → `vp.fit()` → `vp.saveAsImageFile("D:\\fusion_parts\\<name>.png", 1000, 750)`. See `tasks/autocad-bracket/build/render_autocad_v5.py` for an explicit-camera example (iso / top / side with `cam.isFitView`).
 - **Pull files back:** scp FAILS on the `ß` username. Base64 pipe:
   `ssh Großeel@100.125.213.97 "powershell -NoProfile -Command \"[Convert]::ToBase64String([IO.File]::ReadAllBytes('D:/fusion_parts/<f>.png'))\"" | sed '1s/^\xEF\xBB\xBF//' | tr -d '\r\n' | base64 -d > <f>.png`
 
@@ -61,16 +68,16 @@ Documented in `fusion-training-data/workflows/workflows.md` (workflow #1 "Vision
 3. Spawn **claude-opus-5** via the **workflow tool**: `agent(prompt, {provider:'anthropic', model:'claude-opus-5'})` with `read_image` of BOTH the drawing and the render. Prompt must say: Fusion is Y-up vs drawing Z-up (rotation is a convention, not an error); judge **feature presence**.
 4. Fix → re-render → gate passes → export STEP to `D:\fusion_parts\`.
 
-`gate_autocad_v5.py` is only a placeholder note — the gate itself runs through the workflow tool.
+`tasks/autocad-bracket/scratch/gate_autocad_v5.py` is only a placeholder note — the gate itself runs through the workflow tool.
 
 ## 5. #4 autocad_bracket (OIP-652393864.jpg) — deep dive, current state
 
-**Adjudication (specs/spec_autocad_adjudicate.json):** Reading B (this session) WINS on all 3 disputed points vs the previous session's Reading A:
+**Adjudication (tasks/autocad-bracket/spec_adjudicate.json):** Reading B (this session) WINS on all 3 disputed points vs the previous session's Reading A:
 - **C2 (Ø50/Ø16 boss) is 63.54 mm BELOW C1**, not 48.3 mm (C2 = (−10.03, −63.54); measured from least-squares circle fits, scale calibrated to 0.08% on 4 labeled circles = 0.7812 mm/px).
 - **S1 curved slot spans 138°→180°** about C1 (not 117–159°); R70 centerline, outer R78 / inner R62, R8 caps.
 - **The obround (R8 caps, 60-mm near cap / 30-mm far cap along −45°) is the EXTERNAL boundary of the third lobe — NOT an internal slot.** Proved by connected-component labeling of thick strokes: obround flanks+caps are in the same component as the R85 arm edge and Ø50 boss (single continuous outer profile). The hub Ø40 is a FREE-STANDING RING the boundary passes OVER.
 
-**v5 rebuild (autocad_bracket_build.py, 21:18):** open 3-lobe outer profile — R85 arm arc (138°→180° about C1) → R30 valley → R30 crest (over the Ø40 hub) → straight diagonal flank → obround lobe (external) → R25 fillet → Ø50 boss arc → R32 fillet → R15 arm tip → close. Key tricks in the script:
+**v5 rebuild (tasks/autocad-bracket/build/autocad_bracket_build.py, 21:18):** open 3-lobe outer profile — R85 arm arc (138°→180° about C1) → R30 valley → R30 crest (over the Ø40 hub) → straight diagonal flank → obround lobe (external) → R25 fillet → Ø50 boss arc → R32 fillet → R15 arm tip → close. Key tricks in the script:
 - **R25 junction:** drawing is a G1 blend (flank + near cap + R25 all merge within ~0.3 mm). Solved the EXACT R25 circle tangent to near cap (|r−N|=33) and boss (|r−C2|=50); its arc grazes the flank within 0.012 mm. **The flank is split at the R25-circle crossing so the sketch forms TWO closed loops** (main plate + small near-cap tip), and both are extruded joined (`Join`).
 - S1 slot cut, Ø20 @ C1 and Ø16 @ C2 bores cut, hub raised pad Ø40×6 (3 each side, `NewBody`).
 - The script self-cleans (timeline deletion) and reports census (profile areas, slot area, bbox, volume) via `result`.
@@ -91,18 +98,18 @@ Documented in `fusion-training-data/workflows/workflows.md` (workflow #1 "Vision
 | 4 | autocad_bracket | ⚠️→v5 rebuilt | **run the gate on v5**, fix what it flags, export STEP |
 | 5 | ex173 | ⚠️ | **3-lobe base + 3×Ø10 mounting holes + central Ø32/Ø19 tower + 2×45° chamfer** missing — re-read drawing via opus-5 |
 
-Drawings: `/home/nik/dev/Fusion360_MCP_Training/data/drawings/` (example5-2094245636.png, OIP-1099189824.jpg, OIP-479997622.jpg, OIP-652393864.jpg, OIP-366831756.jpg). Specs: `specs/spec_{base_boss,step_bracket,autocad_bracket,autocad_adjudicate,ex173,ex173_housing}.json`.
+Drawings: `/home/nik/dev/Fusion360_MCP_Training/data/drawings/` (example5-2094245636.png, OIP-1099189824.jpg, OIP-479997622.jpg, OIP-652393864.jpg, OIP-366831756.jpg). Specs: ``tasks/<slug>/spec.json` (autocad-bracket also has `spec_adjudicate.json`; ex173's housing misread is kept as `spec_housing_superseded.json`)`.
 
 ## 7. Ordered next steps
 
-1. **Preserve v5:** render (rerun `render_autocad_v5.py`) and `export_design` (f3d or step) of the current model before anything else; pull PNGs back via base64 pipe. (Or `save_design` first.)
-2. **Gate #4:** workflow tool → opus-5, drawing + `autocad_bracket_v5_*.png`, feature-presence rubric with Y-up/Z-up note. Fix → re-render → gate → export `D:\fusion_parts\autocad_bracket.stp`.
+1. **Preserve v5:** render (rerun `tasks/autocad-bracket/build/render_autocad_v5.py`) and `export_design` (f3d or step) of the current model before anything else; pull PNGs back via base64 pipe. (Or `save_design` first.)
+2. **Gate #4:** workflow tool → opus-5, drawing + `autocad_bracket_v5_*.png`, feature-presence rubric with Y-up/Z-up note. Fix → re-render → gate → export `D:\fusion_parts\~/data/cad-exports/autocad-bracket/autocad_bracket.stp`.
 3. **Fix #2 (base_boss):** both R30 fillets in one input; 15×3 front notch. Re-render, gate, export.
 4. **Re-read #3 (step_bracket) and #5 (ex173)** drawings via opus-5 for the missing features; finish builds; gate each; export.
 5. **Re-export all 5 STEPs** to `D:\fusion_parts\` (rocker_arm / base_boss / step_bracket / autocad_bracket / ex173) only after each passes its gate.
 
 ## 8. Housekeeping
 
-- **Git:** all Fusion work is UNCOMMITTED (`autocad_bracket_build.py`, `base_boss_build.py`, `step_bracket_build.py`, `ex173_build.py`, `rocker_arm_build.py`, `desktop_fusion_client.py`, `fusion_*.py`, `wol_desktop.py`, `specs/`, `review/`, both older HANDOFFs, `gate_autocad_v5.py`, `inspect_v5.py`, `render_autocad_v5.py` are untracked). The only uncommitted tracked change is the `fitz`→`pymupdf` deprecation fix in `pdf_parser.py` + 2 test files (tests pass: 7 passed). PR note: creating PRs needs the compare URL in CLAUDE.md (no GitHub token available).
+- **Git:** all Fusion work is UNCOMMITTED (`tasks/autocad-bracket/build/autocad_bracket_build.py`, `base_boss_build.py`, `step_bracket_build.py`, `ex173_build.py`, `rocker_arm_build.py`, `desktop_fusion_client.py`, `fusion_*.py`, `wol_desktop.py`, `specs/`, `review/`, both older HANDOFFs, `tasks/autocad-bracket/scratch/gate_autocad_v5.py`, `inspect_v5.py`, `tasks/autocad-bracket/build/render_autocad_v5.py` are untracked). The only uncommitted tracked change is the `fitz`→`pymupdf` deprecation fix in `pdf_parser.py` + 2 test files (tests pass: 7 passed). PR note: creating PRs needs the compare URL in CLAUDE.md (no GitHub token available).
 - Prior handoffs: `HANDOFF_pipeline_review.md` (geometry pipeline → Fusion, full #2–#5 fix list + API gotchas) and `HANDOFF_fusion_mission.md` (older valve-body mission, topology history).
 - This session has **no** `mcp__fusion360__*` tools — everything goes through the desktop bridge client.
