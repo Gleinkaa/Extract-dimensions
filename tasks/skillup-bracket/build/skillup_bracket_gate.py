@@ -8,11 +8,15 @@
 import json
 import sys
 
+from pathlib import Path
+# task folder lives at <repo>/tasks/<slug>/build/, so the repo root is three up
+REPO_ROOT = Path(__file__).resolve().parents[3]
+
 def main():
     render_dir = sys.argv[1] if len(sys.argv) > 1 else "."
     drawing = sys.argv[2] if len(sys.argv) > 2 else "skillup_bracket.jpg"
 
-    with open("output/skillup_bracket.json") as f:
+    with open(REPO_ROOT / "output" / "skillup_bracket.json") as f:
         spec = json.load(f)
 
     print("GATE: skillup bracket")
