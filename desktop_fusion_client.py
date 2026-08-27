@@ -22,12 +22,16 @@ Usage:
   python3 desktop_fusion_client.py run rocker_arm_build.py
   python3 desktop_fusion_client.py bodies
 """
+# Reach the bridge over the tailnet directly (no SSH tunnel) by setting
+# FUSION_BRIDGE_URL=http://100.125.213.97:7634 (or the machine's 100.x IP), or
+# by passing `--base <url>` on the command line.
 import json
+import os
 import sys
 import urllib.request
 import urllib.error
 
-BASE = "http://127.0.0.1:7634"
+BASE = os.environ.get("FUSION_BRIDGE_URL", "http://127.0.0.1:7634").rstrip("/")
 
 
 def _req(method, path, payload=None, timeout=180):
@@ -62,7 +66,11 @@ def run_python(code):
 
 
 if __name__ == "__main__":
-    cmd = sys.argv[1] if len(sys.argv) > 1 else "status"
+    args = sys.argv[1:]
+    if args and args[0] == "--base" and len(args) >= 2:
+        BASE = args[1].rstrip("/")
+        args = args[2:]
+    cmd = args[0] if args else "status"
     if cmd == "status":
         print(json.dumps(status(), indent=2))
     elif cmd == "py":

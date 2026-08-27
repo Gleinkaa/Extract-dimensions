@@ -61,7 +61,15 @@ def extract_with_ai(
     extrude_height: Override extrusion height; if None, Claude's answer is used.
     api_key:        Anthropic API key. Falls back to ANTHROPIC_API_KEY env var.
     """
-    client = anthropic.Anthropic(api_key=api_key or os.environ.get("ANTHROPIC_API_KEY"))
+    key = api_key or os.environ.get("ANTHROPIC_API_KEY")
+    oauth = os.environ.get("ANTHROPIC_OAUTH_TOKEN")
+    if key:
+        client = anthropic.Anthropic(api_key=key)
+    elif oauth:
+        # OAuth token route (sk-ant-oat01-...): used when no API key is set.
+        client = anthropic.Anthropic(auth_token=oauth)
+    else:
+        raise ValueError("No Anthropic credentials: set ANTHROPIC_API_KEY or ANTHROPIC_OAUTH_TOKEN")
 
     # Rasterize the page to PNG
     png_bytes = pdf_page_to_png_bytes(pdf_path, page_index=page_index, dpi=200)
